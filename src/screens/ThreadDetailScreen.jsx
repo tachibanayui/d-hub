@@ -12,6 +12,10 @@ export default function ThreadDetailScreen() {
                 fas
                 daf\\sda
 
+                <a href="fsa
+                f
+                "></a>
+
                 asd
             </Container>
         </DefaultLayout>
