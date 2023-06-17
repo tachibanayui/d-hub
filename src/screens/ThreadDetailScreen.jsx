@@ -8,6 +8,11 @@ export default function ThreadDetailScreen() {
         <DefaultLayout>
             <Container>
                 Thread details: id = {threadId}
+                oihfa
+                fas
+                daf\\sda
+
+                asd
             </Container>
         </DefaultLayout>
     )
