@@ -41,6 +41,43 @@
             "views": 3
         }
     ],
+    "posts": [
+        {
+            "id": 1,
+            "threadId": 1,
+            "authorId": 1,
+            "content": "Great thread! I have a question regarding programming languages.",
+            "created": 1673629200000
+        },
+        {
+            "id": 2,
+            "threadId": 1,
+            "authorId": 1,
+            "content": "Sure, feel free to ask your question!",
+            "created": 1702486800000
+        },
+        {
+            "id": 3,
+            "threadId": 1,
+            "authorId": 2,
+            "content": "Which programming language is best for beginners?",
+            "created": 1685811600000
+        },
+        {
+            "id": 4,
+            "threadId": 2,
+            "authorId": 1,
+            "content": "I recently tried a new restaurant called 'Food Paradise.' It has amazing food and a cozy atmosphere.",
+            "created": 1672938000000
+        },
+        {
+            "id": 5,
+            "threadId": 2,
+            "authorId": 2,
+            "content": "Thanks for the recommendation! I'll definitely check it out.",
+            "created": 1672765200000
+        }
+    ],
     "tags": [
         {
             "id": 1,
