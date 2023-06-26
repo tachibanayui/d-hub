@@ -1,20 +1,36 @@
-import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import HeaderAcct from "./HeaderAcct";
 
 export default function Header() {
     return (
-        <Navbar bg="primary" data-bs-theme="dark">
+        <Navbar expand="md" bg="primary" data-bs-theme="dark">
             <Container>
-                <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-                <Nav className="me-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#features">Features</Nav.Link>
-                    <Nav.Link href="#pricing">Pricing</Nav.Link>
-                </Nav>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text>
-                        Signed in as: <a href="#login">Mark Otto</a>
-                    </Navbar.Text>
+                <Navbar.Brand>
+                    <Link to="/" className="link-unstyled title">
+                        DHub
+                    </Link>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link>
+                            <Link className="link-unstyled" to="/">
+                                Threads
+                            </Link>
+                        </Nav.Link>
+                        <Nav.Link>
+                            <Link className="link-unstyled" to="/tag">
+                                Tags
+                            </Link>
+                        </Nav.Link>
+                        <Nav.Link>
+                            <Link className="link-unstyled" to="/user">
+                                Users
+                            </Link>
+                        </Nav.Link>
+                    </Nav>
+                    <HeaderAcct />
                 </Navbar.Collapse>
             </Container>
         </Navbar>

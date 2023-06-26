@@ -2,22 +2,28 @@ import DefaultLayout from "../layouts/DefaultLayout";
 import ReactQuill from "react-quill";
 import { useEffect, useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
+import { useUser } from "../hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
-async function createNewThread(title, tagId, detail, userId) {
-    const threadResp = await fetch("http://localhost:9999/theads", {
-        method: "post",
+async function createNewThread(title, tagIds, detail, userId) {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    const threadResp = await fetch("http://localhost:9999/threads", {
+        method: "POST",
+        headers,
         body: JSON.stringify({
             title,
             created: +new Date(),
             userId,
-            tagId,
+            tagIds,
             views: 0,
         }),
     });
 
     const threadId = (await threadResp.json()).id;
     const postResp = await fetch("http://localhost:9999/posts", {
-        method: "post",
+        method: "POST",
+        headers,
         body: JSON.stringify({
             userId,
             threadId: threadId,
@@ -35,13 +41,9 @@ const CreateThreadScreen = () => {
     const [chosenTag, setChosenTag] = useState(1);
     const [detail, setDetail] = useState("");
     const [title, setTitle] = useState("");
-    const [user, setUser] = useState({});
-
-    useEffect(() => {
-        const userStore = window.localStorage.getItem("user");
-        console.log(userStore);
-        setUser(userStore)
-    }, []);
+    const nav = useNavigate();
+    const [user] = useUser();
+    
 
     useEffect(() => {
         fetch("http://localhost:9999/tags")
@@ -51,17 +53,23 @@ const CreateThreadScreen = () => {
                 setTags(x);
                 setChosenTag(x[0]?.id);
             });
-        
-        
     }, [selectedTags]);
 
     const handleCreate = () => {
-        createNewThread(title);
+        if (!user) {
+            nav("/login");
+            return;
+        }
+
+        createNewThread(title, selectedTags.map(x => x.id), detail, user.id).then(([threadId]) => { 
+            nav(`/thread/${threadId}`);
+        });
     };
 
     const handleAddTag = () => {
-        if (chosenTag > 0) {
-            setSelectedTag([...selectedTags, tags.find((x) => x.id === chosenTag)]);
+        const newTag = tags.find((x) => x.id === chosenTag);
+        if (newTag) {
+            setSelectedTag([...selectedTags, newTag]);
         }
     };
 
