@@ -1,73 +1,83 @@
-import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-export default function Login() {
+import { toast } from "react-toastify";
 
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
-  const nav = useNavigate();
+const Login = () => {
+    const [username, usernameupdate] = useState('');
+    const [password, passwordupdate] = useState('');
+    const usenavigate=useNavigate();
 
+    useEffect(()=>{
+sessionStorage.clear();
+    },[]);
 
-  const handleLogin = () => {
-    if (user && password) {
-      alert("Login success");
-      nav('/');
+    const ProceedLogin = (e) => {
+        e.preventDefault();
+        if (validate()) {
+            ///implentation
+            // console.log('proceed');
+            fetch("http://localhost:9999/users" + username).then((res) => {
+                return res.json();
+            }).then((resp) => {
+                //console.log(resp)
+                if (Object.keys(resp).length === 0) {
+                    toast.error('Please Enter valid username');
+                } else {
+                    if (resp.password === password) {
+                        toast.success('Success');
+                        sessionStorage.setItem('username',username);
+                        sessionStorage.setItem('userrole',resp.role);
+                        usenavigate('/')
+                    }else{
+                        toast.error('Please Enter valid credentials');
+                    }
+                }
+            }).catch((err) => {
+                toast.error('Login Failed due to :' + err.message);
+            });
+        }
     }
-  }
-  return (
-    <div>
-      <Container>
-        <Row className="vh-100 d-flex justify-content-center align-items-center">
-          <Col md={8} lg={6} xs={12}>
-            <div className="border border-3 border-primary"></div>
-            <Card className="shadow">
-              <Card.Body>
-                <div className="mb-3 mt-md-4">
-                  <h2 className="fw-bold mb-2 text-uppercase ">Username</h2>
 
-                  <div className="mb-3">
-                    <Form>
-                      <Form.Group className="mb-3" controlId="user">
-                        <Form.Label className="text-center">
-                          Username
-                        </Form.Label>
-                        <Form.Control type="text" onChange={(e) => setUser(e.target.value)} />
-                      </Form.Group>
-                      <p style={{ color: 'red' }}>{user ? "" : "Please enter username"}</p>
-                        
-                      <Form.Group
-                        className="mb-3"
-                        controlId="formBasicPassword"
-                      >
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" onChange={(e) => setPassword(e.target.value)} />
-                      </Form.Group>
-                      <p style={{ color: 'red' }}>{password ? "" : "Please enter password"}</p>
-                      <Form.Group
-                        className="mb-3"
-                        controlId="formBasicCheckbox"
-                      >
-                        <p className="small">
-                          <a className="text-primary" href="#!">
-                            Forgot password?
-                          </a>
-                        </p>
-                      </Form.Group>
-                      <div className="d-grid">
-                        <Button onClick={handleLogin}>
-                          Login
-                        </Button>
-                      </div>
-                    </Form>
-
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
+   
+    const validate = () => {
+        let result = true;
+        if (username === '' || username === null) {
+            result = false;
+            toast.warning('Please Enter Username');
+        }
+        if (password === '' || password === null) {
+            result = false;
+            toast.warning('Please Enter Password');
+        }
+        return result;
+    }
+    return (
+        <div className="row">
+            <div className="offset-lg-3 col-lg-6" style={{ marginTop: '100px' }}>
+                <form onSubmit={ProceedLogin} className="container">
+                    <div className="card">
+                        <div className="card-header">
+                            <h2>User Login</h2>
+                        </div>
+                        <div className="card-body">
+                            <div className="form-group">
+                                <label>User Name <span className="errmsg">*</span></label>
+                                <input value={username} onChange={e => usernameupdate(e.target.value)} className="form-control"></input>
+                            </div>
+                            <div className="form-group">
+                                <label>Password <span className="errmsg">*</span></label>
+                                <input type="password" value={password} onChange={e => passwordupdate(e.target.value)} className="form-control"></input>
+                            </div>
+                        </div>
+                        <div className="card-footer">
+                            <button type="submit" className="btn btn-primary">Login</button> |
+                            <Link className="btn btn-success" to={'/register'}>New User</Link>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
 }
 
+export default Login;
