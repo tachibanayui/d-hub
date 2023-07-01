@@ -1,12 +1,12 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
-export default function DefaultLayout({children}) {
+export default function DefaultLayout({ children }) {
     return (
         <div>
             <Header />
-            {children}
-            <Footer/>
+            <div style={{ paddingBottom: "100px" }}>{children}</div>
+            <Footer />
         </div>
-    )
+    );
 }
