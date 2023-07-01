@@ -63,7 +63,7 @@ export default function ThreadListScreen() {
                 </div>
                 <ListGroup>
                     {threads.map((x) => (
-                        <ThreadListItem key={x.id} thread={x} tagDict={tagDict} />
+                        <ThreadListItem key={x.id} thread={x} tagIds={x.tags} />
                     ))}
                 </ListGroup>
             </Container>
