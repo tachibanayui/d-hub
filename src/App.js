@@ -7,6 +7,7 @@ import CreateThreadScreen from './screens/CreateThreadScreen';
 import LoginScreen from './screens/LoginScreen';
 import NotFoundScreen from './screens/NotFoundScreen';
 import CreateTags from './components/CreateTags';
+import TagList from './components/TagList';
 
 
 function App() {
@@ -17,8 +18,8 @@ function App() {
                 <Route path="/thread/:threadId" element={<ThreadDetailScreen />} />
                 <Route path="/thread/new" element={<CreateThreadScreen />} />
                 <Route path="/login" element={<LoginScreen />} />
-                <Route path='/tags/create' element={<Create />} />
-                <Route path='/taglist' element={<TagList />} />
+                <Route path='/tags/create' element={<CreateTags />} />
+                <Route path='/tag' element={<TagList />} />
                 <Route path="*" element={<NotFoundScreen />} />
                 
             </Routes>
