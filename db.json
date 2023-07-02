@@ -5,7 +5,10 @@
             "title": "Introduction to Artificial Intelligence",
             "created": 1687010447656,
             "userId": 1,
-            "tagIds": [1, 2],
+            "tagIds": [
+                1,
+                2
+            ],
             "views": 0
         },
         {
@@ -13,7 +16,10 @@
             "title": "Machine Learning Algorithms and Applications",
             "created": 1687010509821,
             "userId": 2,
-            "tagIds": [1, 2],
+            "tagIds": [
+                1,
+                2
+            ],
             "views": 12
         },
         {
@@ -21,7 +27,10 @@
             "title": "Web Development Best Practices",
             "created": 1687010612154,
             "userId": 3,
-            "tagIds": [1, 2],
+            "tagIds": [
+                1,
+                2
+            ],
             "views": 5
         },
         {
@@ -29,7 +38,10 @@
             "title": "Cybersecurity Threats and Countermeasures",
             "created": 1687010731547,
             "userId": 2,
-            "tagIds": [1, 2],
+            "tagIds": [
+                1,
+                2
+            ],
             "views": 8
         },
         {
@@ -37,14 +49,20 @@
             "title": "Data Science Tools and Techniques",
             "created": 1687010863276,
             "userId": 4,
-            "tagIds": [1, 2],
+            "tagIds": [
+                1,
+                2
+            ],
             "views": 3
         },
         {
             "title": "Introduction to Artificial Intelligence",
             "created": 1687010447656,
             "userId": 1,
-            "tagIds": [1, 2],
+            "tagIds": [
+                1,
+                2
+            ],
             "views": 0,
             "id": 6
         }
@@ -126,6 +144,7 @@
     "users": [
         {
             "id": 1,
+            "userId": 1,
             "name": "Vo Sy Hieu",
             "dob": "19/11/2002",
             "account": "hieuvs19",
@@ -138,6 +157,7 @@
         },
         {
             "id": 2,
+            "userId": 2,
             "name": "Nguyen Van A",
             "dob": "11/2/1989",
             "account": "Anv1234",
@@ -150,6 +170,7 @@
         },
         {
             "id": 3,
+            "userId": 3,
             "name": "Vu Thi Nuong",
             "dob": "9/12/2000",
             "account": "nuong123",
@@ -162,6 +183,7 @@
         },
         {
             "id": 4,
+            "userId": 4,
             "name": "Pham Van Cao",
             "dob": "4/10/1999",
             "account": "Cao123456",
@@ -174,6 +196,7 @@
         },
         {
             "id": 5,
+            "userId": 5,
             "name": "Vuong Sy Duy",
             "dob": "18/11/2002",
             "account": "duyvs123",

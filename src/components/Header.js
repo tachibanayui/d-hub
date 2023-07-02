@@ -29,6 +29,11 @@ export default function Header() {
                                 Users
                             </Link>
                         </Nav.Link>
+                        <Nav.Link>
+                            <Link className="link-unstyled" to="/report">
+                                Report
+                            </Link>
+                        </Nav.Link>
                     </Nav>
                     <HeaderAcct />
                 </Navbar.Collapse>
