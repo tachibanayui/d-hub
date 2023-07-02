@@ -1,20 +1,32 @@
-import { Button, Container, Form, ListGroup } from "react-bootstrap";
+import { Button, Col, Container, Form, ListGroup, Row } from "react-bootstrap";
 import DefaultLayout from "../layouts/DefaultLayout";
 import ThreadListItem from "../components/ThreadListItem";
 import { useEffect, useState } from "react";
 import { PlusLg, Search } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
+import SearchThreads from "../components/SearchThreads";
 
 const ITEM_PER_PAGE = 10;
 
 export default function ThreadListScreen() {
     const [threads, setThreads] = useState([]);
-    const [totalCount, setTotalCount] = useState(0); 
+    const [totalCount, setTotalCount] = useState(0);
     const [tagDict, setTagDict] = useState([]);
     const [pageIdx, setPageIdx] = useState(0);
+    const [searchParams, setSearchParams] = useState();
 
     useEffect(() => {
-        fetch(`http://localhost:9999/threads?_page=${pageIdx}&_limit=${ITEM_PER_PAGE}`)
+        const params = searchParams || {
+            query: "",
+            author: -1,
+            tags: []
+        };
+
+        const tsQuery = params.query === "" ? "" : `q=${params.query}&`
+        const userQuery = params.author === -1 ? "" : `userId=${params.author}&`;
+        const url = `http://localhost:9999/threads?${tsQuery}${userQuery}_page=${pageIdx}&_limit=${ITEM_PER_PAGE}`;
+        console.log(url);
+        fetch(url)
             .then((x) => {
                 setTotalCount(x.headers.get("X-Total-Count"));
                 return x.json();
@@ -24,15 +36,14 @@ export default function ThreadListScreen() {
         fetch("http://localhost:9999/tags")
             .then((x) => x.json())
             .then((x) => setTagDict(x));
-    }, [pageIdx]);
-
+    }, [pageIdx, searchParams]);
 
     const handleChangePageIdx = (e) => {
         setPageIdx(e.target.value);
     };
 
     const pageCount = Math.ceil(totalCount / ITEM_PER_PAGE);
-    const pages = [...Array(pageCount).keys()].map(x => x + 1);
+    const pages = [...Array(pageCount).keys()].map((x) => x + 1);
 
     return (
         <DefaultLayout>
@@ -48,24 +59,31 @@ export default function ThreadListScreen() {
                         ))}
                     </Form.Select>
 
-                    <Button variant="secondary" style={{ marginLeft: "auto" }}>
+                    {/* <Button variant="secondary" style={{ marginLeft: "auto" }}>
                         <Link to="/search" className="link-unstyled">
                             <Search />
                             Search
                         </Link>
-                    </Button>
-                    <Button variant="primary">
+                    </Button> */}
+                    <Button variant="primary" style={{ marginLeft: "auto" }}>
                         <Link to="/thread/new" className="link-unstyled">
                             <PlusLg />
                             New Thread
                         </Link>
                     </Button>
                 </div>
-                <ListGroup>
-                    {threads.map((x) => (
-                        <ThreadListItem key={x.id} thread={x} tagDict={tagDict} />
-                    ))}
-                </ListGroup>
+                <Row>
+                    <Col md={4} className="mb-3">
+                        <SearchThreads onSearch={e => setSearchParams(e)} />
+                    </Col>
+                    <Col md={8}>
+                        <ListGroup>
+                            {threads.map((x) => (
+                                <ThreadListItem key={x.id} thread={x} />
+                            ))}
+                        </ListGroup>
+                    </Col>
+                </Row>
             </Container>
         </DefaultLayout>
     );

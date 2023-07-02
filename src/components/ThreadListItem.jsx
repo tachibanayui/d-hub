@@ -12,7 +12,7 @@ const ThreadListItem = ({ thread }) => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:9999/tags?id=${tagIds.join("&id=")}`)
+        fetch(`http://localhost:9999/tags?id=${tagIds?.join("&id=")}`)
             .then((x) => x.json())
             .then((x) => setTags(x));
     }, [tagIds]);
