@@ -20,7 +20,7 @@ function App() {
                 <Route path="/thread/:threadId" element={<ThreadDetailScreen />} />
                 <Route path="/thread/new" element={<CreateThreadScreen />} />
                 <Route path="/login" element={<LoginScreen />} />
-                <Route path='/tags/create' element={<CreateTags />} />
+                <Route path='/tag/create' element={<CreateTags />} />
                 <Route path='/tag' element={<TagList />} />
                 <Route path='/edit/:tid' element={<Edit />} />
 

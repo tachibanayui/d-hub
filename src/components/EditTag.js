@@ -41,7 +41,7 @@ const Edit = () => {
       })
         .then(() => {
           alert("Saved successfully.");
-          navigate("/taglist");
+          navigate("/tag");
         })
         .catch((err) => {
           console.log(err.message);
@@ -56,10 +56,7 @@ const Edit = () => {
       </Card.Header>
       <Card.Body>
         <Form onSubmit={handlesubmit}>
-          <Form.Group >
-            <Form.Label>ID<span style={{ color: "red" }}>*</span></Form.Label>
-            <Form.Control disabled={"disabled"} />
-          </Form.Group>
+          
           <Form.Group >
             <Form.Label>Topic<span style={{ color: "red" }}>*</span></Form.Label>
             <Form.Control type="text" value={topic} onChange={(e => setTopic(e.target.value))} />
@@ -83,22 +80,14 @@ const Edit = () => {
             )}
           </Form.Group>
 
-          <Form.Group >
-            <Form.Label>Views<span style={{ color: "red" }}>*</span></Form.Label>
-            <Form.Control value={views} onChange={(e => setViews(e.target.value))} type="text" />
-            {views.length == 0 && (
-              <label style={{ color: "red" }}>
-                Please enter the view
-              </label>
-            )}
-          </Form.Group>
+          
 
 
           <Button type="submit">Submit</Button>
         </Form>
       </Card.Body>
       <Card.Footer>
-        <Link to={"/taglist"}>Back to List</Link>
+        <Link to={"/tag"}>Back to List</Link>
       </Card.Footer>
     </Card>
   );

@@ -24,7 +24,7 @@ const CreateTags = () => {
       })
         .then(() => {
           alert("Add Tags successfully.");
-          navigate("/taglist");
+          navigate("/tag");
         })
         .catch((err) => {
           console.log(err.message);
@@ -37,12 +37,7 @@ const CreateTags = () => {
           <Card.Body>
         <Form onSubmit={handlesubmit}>
 
-          <Form.Group>
-            <Form.Label>
-              ID<span style={{ color: "red" }}>*</span>
-            </Form.Label>
-            <Form.Control disabled value={id} />
-          </Form.Group>
+          
 
           <Form.Group>
             <Form.Label>
@@ -97,7 +92,7 @@ const CreateTags = () => {
         </Form>
       </Card.Body>
       <Card.Footer>
-        <Link to={"/taglist"}>Back to List</Link>
+        <Link to={"/tag"}>Back to List</Link>
       </Card.Footer>
     </Card>
   );

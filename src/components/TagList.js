@@ -45,7 +45,7 @@ const TagList = () => {
       <div>
         <h2 style={{ color: "black", textAlign: "center" }}>List of tags</h2>
 
-        <Link to={"/tags/create"} ><Button variant="primary" style={{ marginLeft: "90%" }}>Created</Button></Link>
+        <Link to={"/tag/create"} ><Button variant="primary" style={{ marginLeft: "90%" }}>New Tag</Button></Link>
 
         <div className="tag-list" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Row className="tag-row">
