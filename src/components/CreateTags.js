@@ -10,17 +10,14 @@ const CreateTags = () => {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    const empdata = { id, topic, created, description };
+    const empdata = { id, topic, created: new Date().toISOString(), description };
     if (topic.length === 0 || description.length === 0) {
       alert('Please fill all fields');
     } else {
-
-
-      fetch(" http://localhost:9999/tags", {
+      fetch("http://localhost:9999/tags", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...empdata, created: +new Date(created), views:0 }),
-
+        body: JSON.stringify({ ...empdata, views: 0 }),
       })
         .then(() => {
           alert("Add Tags successfully.");
@@ -31,6 +28,7 @@ const CreateTags = () => {
         });
     }
   };
+  
   return (
     <Card>
       <Card.Header style={{ textAlign: "center" }}>Create Tags</Card.Header>
@@ -56,18 +54,7 @@ const CreateTags = () => {
 
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>
-              Created<span style={{ color: "red" }}>*</span>
-            </Form.Label>
-            <Form.Control
-              type="date"
-              value={created}
-              onChange={(e) => setCreated(e.target.value)}
-            />
-
-
-          </Form.Group>
+          
           <Form.Group>
             <Form.Label>
               Description<span style={{ color: "red" }}>*</span>

@@ -66,10 +66,7 @@ const Edit = () => {
               </label>
             )}
           </Form.Group>
-          <Form.Group >
-            <Form.Label>Created<span style={{ color: "red" }}>*</span></Form.Label>
-            <Form.Control type="date" value={created} onChange={(e => setCreated(e.target.value))} />
-          </Form.Group>
+          
           <Form.Group >
             <Form.Label>Description<span style={{ color: "red" }}>*</span></Form.Label>
             <Form.Control value={description} onChange={(e => setDescription(e.target.value))} type="text" />
