@@ -4,7 +4,6 @@ import "../style/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Row, Table } from "react-bootstrap";
 import Badge from 'react-bootstrap/Badge';
-import { Default } from "react-toastify/dist/utils";
 import DefaultLayout from "../layouts/DefaultLayout";
 
 const TagList = () => {
