@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
 
@@ -36,7 +36,7 @@ const Register = () => {
         }
 
         if(!isproceed){
-            toast.warning(errormessage)
+            toast(errormessage)
         }else{
             if(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(gmail)){
 
@@ -145,7 +145,7 @@ const Register = () => {
                 </form>
             </div>
 
-
+            <ToastContainer/>
         </div>
     );
 }

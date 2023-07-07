@@ -5,6 +5,9 @@ import ThreadListScreen from './screens/ThreadListScreen';
 import ThreadDetailScreen from './screens/ThreadDetailScreen';
 import Login from './screens/Login';
 import Register from './screens/Register';
+import { ToastContainer } from 'react-toastify';
+import Profile from './screens/Profile';
+import Admin from './screens/Admin';
 
 
 function App() {
@@ -15,8 +18,11 @@ function App() {
               <Route path="/thread/:threadId" element={<ThreadDetailScreen />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/admin" element={<Admin />} />
               
           </Routes>
+         
       </BrowserRouter>
   );
 }
