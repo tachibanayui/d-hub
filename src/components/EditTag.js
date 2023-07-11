@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Form, FormGroup } from "react-bootstrap"
 import { Link, useNavigate, useParams } from "react-router-dom"
-const Edit = () => {
+const TagEdit = () => {
   const { tid } = useParams();
   const navigate = useNavigate();
   const [id, setId] = useState(0);
@@ -89,4 +89,4 @@ const Edit = () => {
     </Card>
   );
 }
-export default Edit;
+export default TagEdit;

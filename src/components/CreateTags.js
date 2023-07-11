@@ -33,9 +33,7 @@ const CreateTags = () => {
     <Card>
       <Card.Header style={{ textAlign: "center" }}>Create Tags</Card.Header>
           <Card.Body>
-        <Form onSubmit={handlesubmit}>
-
-          
+        <Form onSubmit={handlesubmit}>        
 
           <Form.Group>
             <Form.Label>

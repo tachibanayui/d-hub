@@ -8,7 +8,7 @@ import LoginScreen from './screens/LoginScreen';
 import NotFoundScreen from './screens/NotFoundScreen';
 import CreateTags from './components/CreateTags';
 import TagList from './components/TagList';
-import Edit from './components/EditTag';
+import TagEdit from './components/EditTag';
 
 
 
@@ -22,7 +22,7 @@ function App() {
                 <Route path="/login" element={<LoginScreen />} />
                 <Route path='/tag/create' element={<CreateTags />} />
                 <Route path='/tag' element={<TagList />} />
-                <Route path='/edit/:tid' element={<Edit />} />
+                <Route path='/tag/edit/:tid' element={<TagEdit />} />
 
                 <Route path="*" element={<NotFoundScreen />} />
             </Routes>

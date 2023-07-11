@@ -73,7 +73,7 @@ const TagList = () => {
                     <td>{t.views}</td>
                     <td><Link to={"/"} onClick={() => handleDelete(t.id)}>Delete</Link>
                     </td>
-                    <td><Link to={'/edit/' + t.id}>Edit</Link>
+                    <td><Link to={'/tag/edit/' + t.id}>Edit</Link>
                     </td>
                   </tr>
                 ))}
