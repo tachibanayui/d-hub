@@ -12,6 +12,15 @@ export default function ThreadListScreen() {
     const [totalCount, setTotalCount] = useState(0); 
     const [tagDict, setTagDict] = useState([]);
     const [pageIdx, setPageIdx] = useState(0);
+    // const usenavigate=usenavigate();
+
+    // useEffect(()=>{
+    //     let username=sessionStorage.getItem('username');
+    //     if(username===''|| username== null){
+    //         usenavigate('/login');
+    //     }
+
+    // },[])
 
     useEffect(() => {
         fetch(`http://localhost:9999/threads?_page=${pageIdx}&_limit=${ITEM_PER_PAGE}`)

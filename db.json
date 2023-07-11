@@ -252,6 +252,18 @@
       "gender": "male",
       "dob": "2023-07-06",
       "id": 10
+    },
+    {
+      "account": "syhieu123",
+      "name": "Võ Sỹ Hiếu",
+      "password": "hieudz19",
+      "gmail": "aww@gmail.com",
+      "phone": "0123456789",
+      "country": "india",
+      "address": "nghi liên",
+      "gender": "male",
+      "dob": "2023-07-14",
+      "id": 11
     }
   ],
   "userReports": [

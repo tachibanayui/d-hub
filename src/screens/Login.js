@@ -23,12 +23,13 @@ sessionStorage.clear();
                 if (Object.keys(resp).length === 0) {
                     toast.error('Please Enter Valid username');
                 } else {
+                    console.log(resp[0]);
                     console.log(password);
-                    if (resp.password === password) {
+                    if (resp[0].password === password) {
                         
                         toast.success('Success');
-                        // sessionStorage.setItem('username',username);
-                        // sessionStorage.setItem('userId',resp.id);
+                        
+                        localStorage.setItem('user',JSON.stringify(resp[0]));
                         usenavigate('/')
                     }else{
                         toast.error('Please Enter Valid Credentials');
