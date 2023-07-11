@@ -3,8 +3,9 @@ import DefaultLayout from "../layouts/DefaultLayout";
 import ThreadListItem from "../components/ThreadListItem";
 import { useEffect, useState } from "react";
 import { PlusLg, Search } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import SearchThreads from "../components/SearchThreads";
+import { toast } from "react-toastify";
 
 const ITEM_PER_PAGE = 10;
 
@@ -22,10 +23,10 @@ export default function ThreadListScreen() {
             tags: []
         };
 
-        const tsQuery = params.query === "" ? "" : `q=${params.query}&`
+        const tsQuery = params.query === "" ? "" : `q=${params.query}&`;
         const userQuery = params.author === -1 ? "" : `userId=${params.author}&`;
-        const url = `http://localhost:9999/threads?${tsQuery}${userQuery}_page=${pageIdx}&_limit=${ITEM_PER_PAGE}`;
-        console.log(url);
+        const tagsQuery = params.tags.length === 0 ? "" : `tagIds_like=${params.tags.map(x => x.id).join("|")}&`;
+        const url = `http://localhost:9999/threads?${tsQuery}${userQuery}${tagsQuery}_page=${pageIdx}&_limit=${ITEM_PER_PAGE}&_sort=created&_order=desc`;
         fetch(url)
             .then((x) => {
                 setTotalCount(x.headers.get("X-Total-Count"));
@@ -41,6 +42,18 @@ export default function ThreadListScreen() {
     const handleChangePageIdx = (e) => {
         setPageIdx(e.target.value);
     };
+
+    const handleDeleteThread = (id) => {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        fetch(`http://localhost:9999/threads/${id}`, {
+            method: "DELETE",
+            headers,
+        }).then(x => {
+            toast("Deleted successfully!");
+            setThreads(threads.filter(x => x.id !== id));
+        });
+    }
 
     const pageCount = Math.ceil(totalCount / ITEM_PER_PAGE);
     const pages = [...Array(pageCount).keys()].map((x) => x + 1);
@@ -79,7 +92,7 @@ export default function ThreadListScreen() {
                     <Col md={8}>
                         <ListGroup>
                             {threads.map((x) => (
-                                <ThreadListItem key={x.id} thread={x} />
+                                <ThreadListItem key={x.id} thread={x} handleDelete={handleDeleteThread}/>
                             ))}
                         </ListGroup>
                     </Col>

@@ -8,24 +8,27 @@ import LoginScreen from "./screens/LoginScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import SearchThreads from "./components/SearchThreads";
 import CreateTag from "./components/CreateTags";
-import TagList from "./components/TagList";
+import EditThreadScreen from "./screens/EditThreadScreen";
+import { ToastContainer } from "react-toastify";
+//import TagList from "./components/TagList";
 
 function App() {
-      return (
-          <BrowserRouter>
-              <Routes>
-                  <Route path="/" element={<ThreadListScreen />} />
-                  <Route path="/thread/:threadId" element={<ThreadDetailScreen />} />
-                  <Route path="/thread/new" element={<CreateThreadScreen />} />
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<ThreadListScreen />} />
+                <Route path="/thread/:threadId" element={<ThreadDetailScreen />} />
+                <Route path="/thread/new" element={<CreateThreadScreen />} />
+                <Route path="/thread/:threadId/edit" element={<EditThreadScreen />} />
                 <Route path="/search" element={<SearchThreads />} />
-                  <Route path="/login" element={<LoginScreen />} />
-                  <Route path='/tags/create' element={<CreateTag />} />
-                <Route path='/taglist' element={<TagList />} />
-                <Route path="*" element={<NotFoundScreen  />} />
-                  
+                <Route path="/login" element={<LoginScreen />} />
+                <Route path="/tags/create" element={<CreateTag />} />
+                {/* <Route path='/taglist' element={<TagList />} /> */}
+                <Route path="*" element={<NotFoundScreen />} />
             </Routes>
-          </BrowserRouter>
-      );
+            <ToastContainer />
+        </BrowserRouter>
+    );
 }
 
 export default App;

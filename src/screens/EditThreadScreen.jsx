@@ -3,48 +3,19 @@ import ReactQuill from "react-quill";
 import { useEffect, useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { useUser } from "../hooks/useUser";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-async function createNewThread(title, tagIds, detail, userId) {
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    const threadResp = await fetch("http://localhost:9999/threads", {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-            title,
-            created: +new Date(),
-            userId,
-            tagIds,
-            views: 0,
-        }),
-    });
+const EditThreadScreen = () => {
+    const { threadId } = useParams();
+    const [old, setOld] = useState();
 
-    const threadId = (await threadResp.json()).id;
-    const postResp = await fetch("http://localhost:9999/posts", {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-            userId,
-            threadId: threadId,
-            content: detail,
-        }),
-    });
-
-    const postId = (await postResp.json()).id;
-    return [threadId, postId];
-}
-
-const CreateThreadScreen = () => {
     const [tags, setTags] = useState([]);
     const [selectedTags, setSelectedTag] = useState([]);
     const [chosenTag, setChosenTag] = useState(1);
-    const [detail, setDetail] = useState("");
     const [title, setTitle] = useState("");
     const nav = useNavigate();
     const [user] = useUser();
-    
 
     useEffect(() => {
         fetch("http://localhost:9999/tags")
@@ -56,16 +27,35 @@ const CreateThreadScreen = () => {
             });
     }, [selectedTags]);
 
-    const handleCreate = () => {
-        if (!user) {
-            nav("/login");
-            return;
-        }
+    useEffect(() => {
+        fetch(`http://localhost:9999/threads/${threadId}`)
+            .then((x) => x.json())
+            .then((x) => {
+                setOld(x);
+                setTitle(x.title);
+                fetch("http://localhost:9999/tags")
+                    .then((x) => x.json())
+                    .then((tags) => {
+                        setSelectedTag(tags?.filter((f) => x.tagIds.includes(f.id)));
+                    });
+            });
+    }, [threadId]);
 
-        createNewThread(title, selectedTags.map(x => x.id), detail, user.id).then(([threadId]) => { 
-            toast("Created successfully!");
-            nav(`/thread/${threadId}`);
+    const handleCreate = () => {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        fetch(`http://localhost:9999/threads/${old.id}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({
+                ...old,
+                title,
+                tagIds: selectedTags.map(x => x.id),
+            }),
         });
+
+        toast("Edited successfully!");
+        nav(`/thread/${old.id}`);
     };
 
     const handleAddTag = () => {
@@ -76,8 +66,8 @@ const CreateThreadScreen = () => {
     };
 
     const handleRemoveTag = (e) => {
-        setSelectedTag(selectedTags.filter(x => x.id !== e));
-    }
+        setSelectedTag(selectedTags.filter((x) => x.id !== e));
+    };
 
     return (
         <DefaultLayout>
@@ -110,7 +100,7 @@ const CreateThreadScreen = () => {
                                         key={x.id}
                                         label={x.topic}
                                         checked
-                                        onClick={e => handleRemoveTag(x.id)}
+                                        onClick={(e) => handleRemoveTag(x.id)}
                                     />
                                 ))}
                             </div>
@@ -119,8 +109,6 @@ const CreateThreadScreen = () => {
                                 Add tag
                             </Button>
                             <br />
-                            <Form.Label>Post content</Form.Label>
-                            <ReactQuill theme="snow" value={detail} onChange={setDetail} />
                         </div>
                     </Card.Body>
                     <Card.Footer>
@@ -134,4 +122,4 @@ const CreateThreadScreen = () => {
     );
 };
 
-export default CreateThreadScreen;
+export default EditThreadScreen;

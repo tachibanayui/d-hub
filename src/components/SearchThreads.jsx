@@ -69,7 +69,7 @@ const SearchThreads = ({onSearch}) => {
                     <Form.Select value={author} onChange={e => setAuthor(parseInt(e.target.value))}>
                         <option value="-1">All</option>
                         {authors.map((x) => (
-                            <option value={x.id}>{x.name}</option>
+                            <option key={x.id} value={x.id}>{x.name}</option>
                         ))}
                     </Form.Select>
 
