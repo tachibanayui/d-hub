@@ -2,7 +2,7 @@
   "threads": [
     {
       "id": 1,
-      "title": "Introduction to Artificial Intelligence nos",
+      "title": "Introduction to Artificial Intelligence",
       "created": 1687010447656,
       "userId": 1,
       "tagIds": [
@@ -23,13 +23,15 @@
       "views": 12
     },
     {
-      "title": "Web Development Best Practices 2",
-      "created": 1689066643964,
+      "id": 3,
+      "title": "Web Development Best Practices",
+      "created": 1687010612154,
+      "userId": 3,
       "tagIds": [
         1,
         2
       ],
-      "id": 3
+      "views": 5
     },
     {
       "id": 4,
@@ -44,13 +46,12 @@
     },
     {
       "id": 5,
-      "title": "Data Science Tools and Techniques w",
+      "title": "Data Science Tools and Techniques",
       "created": 1687010863276,
       "userId": 4,
       "tagIds": [
         1,
-        2,
-        3
+        2
       ],
       "views": 3
     },

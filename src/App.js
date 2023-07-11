@@ -7,10 +7,11 @@ import CreateThreadScreen from "./screens/CreateThreadScreen";
 import LoginScreen from "./screens/LoginScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import SearchThreads from "./components/SearchThreads";
-import CreateTag from "./components/CreateTags";
+import CreateTags from "./components/CreateTags";
 import EditThreadScreen from "./screens/EditThreadScreen";
 import { ToastContainer } from "react-toastify";
-//import TagList from "./components/TagList";
+import TagList from "./components/TagList";
+import TagEdit from "./components/TagEdit";
 
 function App() {
     return (
@@ -22,8 +23,10 @@ function App() {
                 <Route path="/thread/:threadId/edit" element={<EditThreadScreen />} />
                 <Route path="/search" element={<SearchThreads />} />
                 <Route path="/login" element={<LoginScreen />} />
-                <Route path="/tags/create" element={<CreateTag />} />
-                {/* <Route path='/taglist' element={<TagList />} /> */}
+                <Route path="/tag/create" element={<CreateTags />} />
+                <Route path="/tag" element={<TagList />} />
+                <Route path="/tag/edit/:tid" element={<TagEdit />} />
+
                 <Route path="*" element={<NotFoundScreen />} />
             </Routes>
             <ToastContainer />
