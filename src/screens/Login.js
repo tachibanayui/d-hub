@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast,ToastContainer } from "react-toastify";
 import {Row} from "react-bootstrap"
 
 const Login = () => {
@@ -15,22 +15,23 @@ sessionStorage.clear();
     const ProceedLogin = (e) => {
         e.preventDefault();
         if (validate()) {
-            ///implentation
-            // console.log('proceed');
-            fetch("http://localhost:9999/users" + username).then((res) => {
+          
+            fetch("http://localhost:9999/users?account=" + username).then((res) => {
                 return res.json();
             }).then((resp) => {
-                //console.log(resp)
+                
                 if (Object.keys(resp).length === 0) {
-                    toast.error('Please Enter valid username');
+                    toast.error('Please Enter Valid username');
                 } else {
+                    console.log(password);
                     if (resp.password === password) {
+                        
                         toast.success('Success');
-                        sessionStorage.setItem('username',username);
-                        sessionStorage.setItem('userrole',resp.role);
+                        // sessionStorage.setItem('username',username);
+                        // sessionStorage.setItem('userId',resp.id);
                         usenavigate('/')
                     }else{
-                        toast.error('Please Enter valid credentials');
+                        toast.error('Please Enter Valid Credentials');
                     }
                 }
             }).catch((err) => {
@@ -44,7 +45,7 @@ sessionStorage.clear();
         let result = true;
         if (username === '' || username === null) {
             result = false;
-            toast.warning('Please Enter Username');
+            toast.warning('Please Enter username');
         }
         if (password === '' || password === null) {
             result = false;
@@ -62,11 +63,11 @@ sessionStorage.clear();
                         </div>
                         <div className="card-body">
                             <div className="form-group">
-                                <label>User Name <span className="errmsg">*</span></label>
+                                <label>User Name <span className="errmsg" style={{color:'red'}}>*</span></label>
                                 <input value={username} onChange={e => usernameupdate(e.target.value)} className="form-control"></input>
                             </div>
                             <div className="form-group">
-                                <label>Password <span className="errmsg">*</span></label>
+                                <label>Password <span className="errmsg" style={{color:'red'}}>*</span></label>
                                 <input type="password" value={password} onChange={e => passwordupdate(e.target.value)} className="form-control"></input>
                             </div>
                         </div>
@@ -77,7 +78,9 @@ sessionStorage.clear();
                     </div>
                 </form>
             </div>
+            <ToastContainer />
         </div>
+        
     );
 }
 

@@ -5,13 +5,14 @@ import { ToastContainer, toast } from "react-toastify";
 const Register = () => {
 
     const [account, accountchange] = useState("");
+    const [dob, dobchange] = useState("");
     const [name, namechange] = useState("");
     const [password, passwordchange] = useState("");
     const [gmail, gmailchange] = useState("");
     const [phone, phonechange] = useState("");
     const [country, countrychange] = useState("india");
     const [address, addresschange] = useState("");
-    const [gender, genderchange] = useState("female");
+    const [gender, genderchange] = useState("male");
 
     const navigate = useNavigate();
 
@@ -20,29 +21,37 @@ const Register = () => {
         let errormessage = 'Please enter the value in ';
         if (account === null || account === '') {
             isproceed = false;
-            errormessage += ' Username';
+            errormessage += ' Username,';
         }
         if (name === null || name === '') {
             isproceed = false;
-            errormessage += ' Fullname';
+            errormessage += ' Fullname,';
         }
         if (password === null || password === '') {
             isproceed = false;
-            errormessage += ' Password';
+            errormessage += ' Password,';
         }
         if (gmail === null || gmail === '') {
             isproceed = false;
-            errormessage += ' gmail';
+            errormessage += ' Email,';
+        }
+        if (dob === null || dob === '') {
+            isproceed = false;
+            errormessage += ' Date of birth,';
+        }
+        if (phone === null || phone === '') {
+            isproceed = false;
+            errormessage += ' Phone ';
         }
 
-        if(!isproceed){
+        if (!isproceed) {
             toast(errormessage)
-        }else{
-            if(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(gmail)){
+        } else {
+            if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(gmail)) {
 
-            }else{
+            } else {
                 isproceed = false;
-                toast.warning('Please enter the valaccount gmail')
+                toast.warning('Please enter the valid Email')
             }
         }
         return isproceed;
@@ -50,10 +59,9 @@ const Register = () => {
 
 
     const handlesubmit = (e) => {
-            e.preventDefault();
-            let regobj = { account, name, password, gmail, phone, country, address, gender };
-            if (IsValaccountate()) {
-            //console.log(regobj);
+        e.preventDefault();
+        let regobj = { account, name, password, gmail, phone, country, address, gender, dob };
+        if (IsValaccountate()) {
             fetch("http://localhost:9999/users", {
                 method: "POST",
                 headers: { 'content-type': 'application/json' },
@@ -125,6 +133,12 @@ const Register = () => {
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="form-group">
+                                        <label>Date of birth <span className="errmsg">*</span></label>
+                                        <input value={dob} onChange={e => dobchange(e.target.value)} type="date" className="form-control"></input>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6">
+                                    <div className="form-group">
                                         <label>Gender</label>
                                         <br></br>
                                         <input type="radio" checked={gender === 'male'} onChange={e => genderchange(e.target.value)} name="gender" value="male" className="app-check"></input>
@@ -145,7 +159,7 @@ const Register = () => {
                 </form>
             </div>
 
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     );
 }
