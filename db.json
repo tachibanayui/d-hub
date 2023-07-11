@@ -1,284 +1,247 @@
 {
-    "threads": [
-        {
-            "id": 1,
-            "title": "Introduction to Artificial Intelligence",
-            "created": 1687010447656,
-            "userId": 1,
-            "tagIds": [
-                1,
-                2
-            ],
-            "views": 0
-        },
-        {
-            "id": 2,
-            "title": "Machine Learning Algorithms and Applications",
-            "created": 1687010509821,
-            "userId": 2,
-            "tagIds": [
-                1,
-                2
-            ],
-            "views": 12
-        },
-        {
-            "id": 3,
-            "title": "Web Development Best Practices",
-            "created": 1687010612154,
-            "userId": 3,
-            "tagIds": [
-                1,
-                2
-            ],
-            "views": 5
-        },
-        {
-            "id": 4,
-            "title": "Cybersecurity Threats and Countermeasures",
-            "created": 1687010731547,
-            "userId": 2,
-            "tagIds": [
-                1,
-                2
-            ],
-            "views": 8
-        },
-        {
-            "id": 5,
-            "title": "Data Science Tools and Techniques",
-            "created": 1687010863276,
-            "userId": 4,
-            "tagIds": [
-                1,
-                2
-            ],
-            "views": 3
-        },
-        {
-            "title": "Introduction to Artificial Intelligence",
-            "created": 1687010447656,
-            "userId": 1,
-            "tagIds": [
-                1,
-                2
-            ],
-            "views": 0,
-            "id": 6
-        }
-    ],
-    "posts": [
-        {
-            "id": 1,
-            "threadId": 1,
-            "authorId": 1,
-            "content": "Great thread! I have a question regarding programming languages.",
-            "created": 1673629200000
-        },
-        {
-            "id": 2,
-            "threadId": 1,
-            "authorId": 1,
-            "content": "Sure, feel free to ask your question!",
-            "created": 1702486800000
-        },
-        {
-            "id": 3,
-            "threadId": 1,
-            "authorId": 2,
-            "content": "Which programming language is best for beginners?",
-            "created": 1685811600000
-        },
-        {
-            "id": 4,
-            "threadId": 2,
-            "authorId": 1,
-            "content": "I recently tried a new restaurant called 'Food Paradise.' It has amazing food and a cozy atmosphere.",
-            "created": 1672938000000
-        },
-        {
-            "id": 5,
-            "threadId": 2,
-            "authorId": 2,
-            "content": "Thanks for the recommendation! I'll definitely check it out.",
-            "created": 1672765200000
-        }
-    ],
-    "tags": [
-        {
-            "id": 1,
-            "topic": "Question",
-            "created": 123,
-            "description": "Questions and concerns related to this topic.",
-            "views": 13
-        },
-        {
-            "id": 2,
-            "topic": "Rating",
-            "created": 342,
-            "description": "Reviews and feedback about this topic.",
-            "views": 10
-        },
-        {
-            "id": 3,
-            "topic": "Discussion",
-            "created": 232,
-            "description": "Discussions and exchanges of opinions about this topic.",
-            "views": 15
-        },
-        {
-            "id": 4,
-            "topic": "News",
-            "created": 245,
-            "description": "The latest news about this topic.",
-            "views": 16
-        },
-        {
-            "id": 5,
-            "topic": "Knowledge",
-            "created": 32,
-            "description": "Basic and advanced knowledge about this topic.",
-            "views": 16
-        }
-    ],
-    "users": [
-        {
-            "id": 1,
-            "userId": 1,
-            "name": "Vo Sy Hieu",
-            "dob": "19/11/2002",
-            "account": "hieuvs19",
-            "password": "123456",
-            "phoneNumber": "0123456789",
-            "city": "Ha Noi",
-            "gender": 0,
-            "gmail": "hieuvs19@gmail.com",
-            "role": 1
-        },
-        {
-            "id": 2,
-            "userId": 2,
-            "name": "Nguyen Van A",
-            "dob": "11/2/1989",
-            "account": "Anv1234",
-            "password": "123456",
-            "phoneNumber": "0123255789",
-            "city": "Sai Gon",
-            "gender": 0,
-            "gmail": "avip123567@gmail.com",
-            "role": 2
-        },
-        {
-            "id": 3,
-            "userId": 3,
-            "name": "Vu Thi Nuong",
-            "dob": "9/12/2000",
-            "account": "nuong123",
-            "password": "123456",
-            "phoneNumber": "0948367583",
-            "city": "Da Nang",
-            "gender": 1,
-            "gmail": "nuongnehihi@gmail.com",
-            "role": 3
-        },
-        {
-            "id": 4,
-            "userId": 4,
-            "name": "Pham Van Cao",
-            "dob": "4/10/1999",
-            "account": "Cao123456",
-            "password": "1234567",
-            "phoneNumber": "0947876543",
-            "city": "Can Tho",
-            "gender": 0,
-            "gmail": "Cao123456@gmail.com",
-            "role": 3
-        },
-        {
-            "id": 5,
-            "userId": 5,
-            "name": "Vuong Sy Duy",
-            "dob": "18/11/2002",
-            "account": "duyvs123",
-            "password": "123456789",
-            "phoneNumber": "0984765893",
-            "city": "Ha Noi",
-            "gender": 0,
-            "gmail": "duyvs1811@gmail.com",
-            "role": 3
-        }
-    ],
-    "userReports": [
-        {
-            "id": 1,
-            "userId": 1,
-            "title": "Member Toxic",
-            "status": "Approved",
-            "comment": "sy hieu have been ban",
-            "content": "Sy Hieu have some inappropriate comments",
-            "created": 122314
-        },
-        {
-            "id": 2,
-            "userId": 2,
-            "title": "Web Forum have bug",
-            "status": "Approved",
-            "comment": "Bug will fix soon",
-            "content": "In chat, sometime i cant chat with my friend",
-            "created": 1122414
-        },
-        {
-            "id": 3,
-            "userId": 3,
-            "status": "Not Approved",
-            "comment": "",
-            "title": "The post contains non-standard content",
-            "content": "In in the social section, some members took the post to convey untrue content",
-            "created": 12312314
-        },
-        {
-            "id": 4,
-            "userId": 4,
-            "status": "Not Approved",
-            "comment": "",
-            "title": "Spamming in Discussions",
-            "content": "User123 keeps spamming irrelevant links in the discussions section.",
-            "created": 12452311
-        },
-        {
-            "id": 5,
-            "userId": 5,
-            "status": "Not Approved",
-            "comment": "",
-            "title": "Profile Picture Violation",
-            "content": "User456 has an inappropriate profile picture containing explicit content.",
-            "created": 12561243
-        }
-    ],
-    "posts": [
-        {
-            "id": 1,
-            "userId": 1,
-            "threadId": 1,
-            "content": "In chat, sometime i cant chat with my friend"
-        },
-        {
-            "id": 2
-        },
-        {
-            "id": 3
-        },
-        {
-            "id": 4
-        },
-        {
-            "id": 5
-        },
-        {
-            "userId": 1,
-            "threadId": 7,
-            "content": "<p>sdgs</p>",
-            "id": 6
-        }
-    ]
+  "threads": [
+    {
+      "id": 1,
+      "title": "Introduction to Artificial Intelligence",
+      "created": 1687010447656,
+      "userId": 1,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 30
+    },
+    {
+      "id": 2,
+      "title": "Machine Learning Algorithms and Applications",
+      "created": 1687010509821,
+      "userId": 2,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 13
+    },
+    {
+      "id": 3,
+      "title": "Web Development Best Practices",
+      "created": 1687010612154,
+      "userId": 3,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 5
+    },
+    {
+      "id": 4,
+      "title": "Cybersecurity Threats and Countermeasures",
+      "created": 1687010731547,
+      "userId": 2,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 8
+    },
+    {
+      "id": 5,
+      "title": "Data Science Tools and Techniques",
+      "created": 1687010863276,
+      "userId": 4,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 3
+    },
+    {
+      "title": "Introduction to Artificial Intelligence",
+      "created": 1687010447656,
+      "userId": 1,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 0,
+      "id": 6
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "threadId": 1,
+      "content": "In chat, sometime i cant chat with my friend"
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "userId": 1,
+      "threadId": 7,
+      "content": "<p>sdgs</p>",
+      "id": 6
+    }
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "topic": "Question",
+      "created": 123,
+      "description": "Questions and concerns related to this topic.",
+      "views": 13
+    },
+    {
+      "id": 2,
+      "topic": "Rating",
+      "created": 342,
+      "description": "Reviews and feedback about this topic.",
+      "views": 10
+    },
+    {
+      "id": 3,
+      "topic": "Discussion",
+      "created": 232,
+      "description": "Discussions and exchanges of opinions about this topic.",
+      "views": 15
+    },
+    {
+      "id": 4,
+      "topic": "News",
+      "created": 245,
+      "description": "The latest news about this topic.",
+      "views": 16
+    },
+    {
+      "id": 5,
+      "topic": "Knowledge",
+      "created": 32,
+      "description": "Basic and advanced knowledge about this topic.",
+      "views": 16
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Vo Sy Hieu",
+      "dob": "19/11/2002",
+      "account": "hieuvs19",
+      "password": "123456",
+      "phoneNumber": "0123456789",
+      "city": "Ha Noi",
+      "gender": 0,
+      "gmail": "hieuvs19@gmail.com",
+      "role": 1
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "name": "Nguyen Van A",
+      "dob": "11/2/1989",
+      "account": "Anv1234",
+      "password": "123456",
+      "phoneNumber": "0123255789",
+      "city": "Sai Gon",
+      "gender": 0,
+      "gmail": "avip123567@gmail.com",
+      "role": 2
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "name": "Vu Thi Nuong",
+      "dob": "9/12/2000",
+      "account": "nuong123",
+      "password": "123456",
+      "phoneNumber": "0948367583",
+      "city": "Da Nang",
+      "gender": 1,
+      "gmail": "nuongnehihi@gmail.com",
+      "role": 3
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "name": "Pham Van Cao",
+      "dob": "4/10/1999",
+      "account": "Cao123456",
+      "password": "1234567",
+      "phoneNumber": "0947876543",
+      "city": "Can Tho",
+      "gender": 0,
+      "gmail": "Cao123456@gmail.com",
+      "role": 3
+    },
+    {
+      "id": 5,
+      "userId": 5,
+      "name": "Vuong Sy Duy",
+      "dob": "18/11/2002",
+      "account": "duyvs123",
+      "password": "123456789",
+      "phoneNumber": "0984765893",
+      "city": "Ha Noi",
+      "gender": 0,
+      "gmail": "duyvs1811@gmail.com",
+      "role": 3
+    }
+  ],
+  "userReports": [
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "Member Toxic",
+      "status": "Approved",
+      "comment": "sy hieu have been ban",
+      "content": "Sy Hieu have some inappropriate comments",
+      "created": 122314
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "title": "Web Forum have bug",
+      "status": "Approved",
+      "comment": "Bug will fix soon",
+      "content": "In chat, sometime i cant chat with my friend",
+      "created": 1122414
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "status": "Not Approved",
+      "comment": "",
+      "title": "The post contains non-standard content",
+      "content": "In in the social section, some members took the post to convey untrue content",
+      "created": 12312314
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "status": "Not Approved",
+      "comment": "",
+      "title": "Spamming in Discussions",
+      "content": "User123 keeps spamming irrelevant links in the discussions section.",
+      "created": 12452311
+    },
+    {
+      "id": 5,
+      "userId": 5,
+      "status": "Not Approved",
+      "comment": "",
+      "title": "Profile Picture Violation",
+      "content": "User456 has an inappropriate profile picture containing explicit content.",
+      "created": 12561243
+    }
+  ]
 }

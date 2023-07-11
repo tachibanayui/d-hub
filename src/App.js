@@ -1,14 +1,14 @@
-import './App.css';
+import "./App.css";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ThreadListScreen from './screens/ThreadListScreen';
-import ThreadDetailScreen from './screens/ThreadDetailScreen';
-import CreateThreadScreen from './screens/CreateThreadScreen';
-import LoginScreen from './screens/LoginScreen';
-import NotFoundScreen from './screens/NotFoundScreen';
+import ThreadListScreen from "./screens/ThreadListScreen";
+import ThreadDetailScreen from "./screens/ThreadDetailScreen";
+import CreateThreadScreen from "./screens/CreateThreadScreen";
+import LoginScreen from "./screens/LoginScreen";
+import NotFoundScreen from "./screens/NotFoundScreen";
 // import CreateTags from './components/CreateTags';
-import Report from './screens/Report';
-
+import Report from "./screens/Report";
+import Post from "./screens/Post";
 
 function App() {
     return (
@@ -18,11 +18,11 @@ function App() {
                 <Route path="/thread/:threadId" element={<ThreadDetailScreen />} />
                 <Route path="/thread/new" element={<CreateThreadScreen />} />
                 <Route path="/login" element={<LoginScreen />} />
+                <Route path="/post/:postId" element={<Post />} />
                 {/* <Route path='/tags/create' element={<Create />} /> */}
                 {/* <Route path='/taglist' element={<TagList />} /> */}
                 <Route path="*" element={<NotFoundScreen />} />
                 <Route path="/report" element={<Report />} />
-
             </Routes>
         </BrowserRouter>
     );
