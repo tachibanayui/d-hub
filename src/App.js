@@ -12,6 +12,8 @@ import EditThreadScreen from "./screens/EditThreadScreen";
 import { ToastContainer } from "react-toastify";
 import TagList from "./components/TagList";
 import TagEdit from "./components/TagEdit";
+import Login from "./screens/Login";
+import Register from "./screens/Register";
 
 function App() {
     return (
@@ -22,7 +24,9 @@ function App() {
                 <Route path="/thread/new" element={<CreateThreadScreen />} />
                 <Route path="/thread/:threadId/edit" element={<EditThreadScreen />} />
                 <Route path="/search" element={<SearchThreads />} />
-                <Route path="/login" element={<LoginScreen />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+
                 <Route path="/tag/create" element={<CreateTags />} />
                 <Route path="/tag" element={<TagList />} />
                 <Route path="/tag/edit/:tid" element={<TagEdit />} />
