@@ -10,7 +10,6 @@ const ThreadListItem = ({ thread }) => {
     const [author, setAuthor] = useState({});
     const [postCount, getPostCount] = useState(0);
 
-
     useEffect(() => {
         fetch(`http://localhost:9999/tags?id=${tagIds?.join("&id=")}`)
             .then((x) => x.json())

@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import DefaultLayout from "../layouts/DefaultLayout";
 import { Container, Card, ListGroup } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 export default function ThreadDetailScreen() {
     const { threadId } = useParams();
     const [thread, setThread] = useState(null);
     const [posts, setPosts] = useState([]);
-    const [user, setUser] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const postsPerPage = 10;
-    const [tagDict, setTagDict] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchThreadDetails = async () => {
@@ -23,26 +22,14 @@ export default function ThreadDetailScreen() {
                 const postsData = await postsResponse.json();
                 setPosts(postsData);
 
-                const userResponse = await fetch(`http://localhost:9999/users/${threadData.userId}`);
-                const userData = await userResponse.json();
-                setUser(userData);
+                // Fetch user data for each post
+                const userIds = postsData.map((post) => post.userId);
+                const uniqueUserIds = Array.from(new Set(userIds));
+                const usersResponse = await Promise.all(uniqueUserIds.map((userId) => fetchUser(userId)));
+                const usersData = await Promise.all(usersResponse.map((response) => response.json()));
+                setUsers(usersData);
 
-                // Update view count in the database
-                const updatedThreadResponse = await fetch(`http://localhost:9999/threads/${threadId}`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        views: threadData.views + 1,
-                    }),
-                });
-                const updatedThreadData = await updatedThreadResponse.json();
-                setThread(updatedThreadData);
-
-                const tagsResponse = await fetch(`http://localhost:9999/tags`);
-                const tagsData = await tagsResponse.json();
-                setTagDict(tagsData);
+                setIsLoading(false);
             } catch (error) {
                 console.log(error);
             }
@@ -51,21 +38,18 @@ export default function ThreadDetailScreen() {
         fetchThreadDetails();
     }, [threadId]);
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+    const fetchUser = async (userId) => {
+        const response = await fetch(`http://localhost:9999/users/${userId}`);
+        return response;
     };
 
-    if (!thread || !user) {
+    const getUserById = (userId) => {
+        return users.find((user) => user.userId === userId);
+    };
+
+    if (isLoading) {
         return <p>Loading...</p>;
     }
-
-    // Tính toán các bài viết trên trang hiện tại
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-
-    // Tính toán số trang
-    const totalPages = Math.ceil(posts.length / postsPerPage);
 
     return (
         <DefaultLayout>
@@ -80,40 +64,32 @@ export default function ThreadDetailScreen() {
                 </Card>
 
                 <h3>Posts</h3>
+
                 <ListGroup>
-                    {currentPosts.map((post) => (
+                    {posts.map((post) => (
                         <ListGroup.Item key={post.id}>
                             <Card>
                                 <Card.Body>
-                                    <Link to={`/post/${post.id}`}>
-                                        <Card.Text>
-                                            <h4>Content: {post.content}</h4>
-                                        </Card.Text>
-                                    </Link>
-                                    <Card.Text>
-                                        User: {user.name} <br />
-                                        Tags: {tagDict[post.tagId]}
-                                    </Card.Text>
+                                    <Row>
+                                        <Col xs={12} md={2}>
+                                            <Link to={`/post/${post.id}`}></Link>
+                                            <Card.Text>
+                                                {getUserById(post.userId)?.name} <br />
+                                                {getUserById(post.userId)?.role} <br />
+                                            </Card.Text>
+                                        </Col>
+                                        <Col xs={12} md={10}>
+                                            <Card.Text>
+                                                <h4>{post.title}</h4>
+                                            </Card.Text>
+                                            {post.content}
+                                        </Col>
+                                    </Row>
                                 </Card.Body>
                             </Card>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-
-                {/* Hiển thị phân trang */}
-                {totalPages > 1 && (
-                    <div>
-                        {Array.from({ length: totalPages }, (_, index) => (
-                            <button
-                                key={index + 1}
-                                onClick={() => handlePageChange(index + 1)}
-                                style={{ fontWeight: currentPage === index + 1 ? "bold" : "normal" }}
-                            >
-                                {index + 1}
-                            </button>
-                        ))}
-                    </div>
-                )}
             </Container>
         </DefaultLayout>
     );
