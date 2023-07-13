@@ -10,6 +10,8 @@ export default function ThreadDetailScreen() {
     const [posts, setPosts] = useState([]);
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 4;
 
     useEffect(() => {
         const fetchThreadDetails = async () => {
@@ -47,6 +49,14 @@ export default function ThreadDetailScreen() {
         return users.find((user) => user.userId === userId);
     };
 
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     if (isLoading) {
         return <p>Loading...</p>;
     }
@@ -66,7 +76,7 @@ export default function ThreadDetailScreen() {
                 <h3>Posts</h3>
 
                 <ListGroup>
-                    {posts.map((post) => (
+                    {currentPosts.map((post) => (
                         <ListGroup.Item key={post.id}>
                             <Card>
                                 <Card.Body>
@@ -75,7 +85,9 @@ export default function ThreadDetailScreen() {
                                             <Link to={`/post/${post.id}`}></Link>
                                             <Card.Text>
                                                 {getUserById(post.userId)?.name} <br />
-                                                {getUserById(post.userId)?.role} <br />
+                                                {post.userId === 1 && "User"}
+                                                {post.userId === 2 && "Moderator"}
+                                                {post.userId === 3 && "Admin"}
                                             </Card.Text>
                                         </Col>
                                         <Col xs={12} md={10}>
@@ -90,7 +102,40 @@ export default function ThreadDetailScreen() {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
+
+                <Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={posts.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                />
             </Container>
         </DefaultLayout>
+    );
+}
+
+function Pagination({ postsPerPage, totalPosts, paginate, currentPage }) {
+    const pageNumbers = [];
+
+    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    return (
+        <nav>
+            <ul className="pagination">
+                {pageNumbers.map((number) => (
+                    <li key={number} className="page-item">
+                        <a
+                            href="#"
+                            onClick={() => paginate(number)}
+                            className={`page-link ${currentPage === number ? "active" : ""}`}
+                        >
+                            {number}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
     );
 }
