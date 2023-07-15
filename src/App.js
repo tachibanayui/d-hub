@@ -8,6 +8,7 @@ import LoginScreen from "./screens/LoginScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 // import CreateTags from './components/CreateTags';
 import Report from "./screens/Report";
+import CreatePostScreen from "./screens/CreatePost";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/thread/:threadId" element={<ThreadDetailScreen />} />
                 <Route path="/thread/new" element={<CreateThreadScreen />} />
                 <Route path="/login" element={<LoginScreen />} />
+                <Route path="/createPost" element={<CreatePostScreen />} />
 
                 {/* <Route path='/tags/create' element={<Create />} /> */}
                 {/* <Route path='/taglist' element={<TagList />} /> */}

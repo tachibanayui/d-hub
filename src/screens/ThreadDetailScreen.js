@@ -74,6 +74,11 @@ export default function ThreadDetailScreen() {
                 </Card>
 
                 <h3>Posts</h3>
+                <Link to="/create-post">
+                    <h4>
+                        <Link to="/createPost">Create New Post</Link>
+                    </h4>
+                </Link>
 
                 <ListGroup>
                     {currentPosts.map((post) => (
