@@ -1,12 +1,14 @@
 import { NavDropdown, Navbar } from "react-bootstrap";
 import { useUser } from "../hooks/useUser";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const HeaderAcct = () => {
+    const nav = useNavigate();
     const [user, setUser] = useUser();
 
     const handleSignOut = () => {
         setUser(undefined);
+        nav("/login");
     }
 
     if (user) {

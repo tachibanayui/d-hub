@@ -1,5 +1,5 @@
 import { Button, Col, ListGroup, Row } from "react-bootstrap";
-import { Calendar, PersonFill } from "react-bootstrap-icons";
+import { Calendar, PencilSquare, PersonFill, TrashFill } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import TagBadge from "./TagBadge";
 import { useEffect, useState } from "react";
@@ -60,11 +60,10 @@ const ThreadListItem = ({ thread, handleDelete }) => {
             </Row>
             {showActions && (
                 <div className="hor-align" style={{ gap: 4 }}>
-                    Action:
                     <Link to={`/thread/${id}/edit`}>
-                        <Button>Edit</Button>
+                        <Button><PencilSquare/> Edit</Button>
                     </Link>
-                    <Button onClick={() => handleDelete(id)}>Delete</Button>
+                    <Button onClick={() => handleDelete(id)}><TrashFill/> Delete</Button>
                 </div>
             )}
         </ListGroup.Item>
