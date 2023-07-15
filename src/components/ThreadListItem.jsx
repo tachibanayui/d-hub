@@ -1,15 +1,16 @@
-import { Col, ListGroup, Row } from "react-bootstrap";
-import { Calendar, PersonFill } from "react-bootstrap-icons";
+import { Button, Col, ListGroup, Row } from "react-bootstrap";
+import { Calendar, PencilSquare, PersonFill, TrashFill } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import TagBadge from "./TagBadge";
 import { useEffect, useState } from "react";
+import { useUser } from "../hooks/useUser";
 
-const ThreadListItem = ({ thread }) => {
+const ThreadListItem = ({ thread, handleDelete }) => {
     const { id, title, views, created, tagIds, userId } = thread;
     const [tags, setTags] = useState([]);
     const [author, setAuthor] = useState({});
-    const [postCount, getPostCount] = useState(0);
-
+    const [postCount, setPostCount] = useState(0);
+    const [user] = useUser();
 
     useEffect(() => {
         fetch(`http://localhost:9999/tags?id=${tagIds?.join("&id=")}`)
@@ -26,8 +27,11 @@ const ThreadListItem = ({ thread }) => {
     useEffect(() => {
         fetch(`http://localhost:9999/posts?threadId=${id}`)
             .then((x) => x.json())
-            .then((x) => getPostCount(x.length));
+            .then((x) => setPostCount   (x.length));
     }, [id]);
+
+
+    const showActions = user && (user.role >= 1 || user.id === userId);
 
     return (
         <ListGroup.Item>
@@ -54,6 +58,14 @@ const ThreadListItem = ({ thread }) => {
                     <div style={{ fontSize: 16 }}>Views: {views}</div>
                 </Col>
             </Row>
+            {showActions && (
+                <div className="hor-align" style={{ gap: 4 }}>
+                    <Link to={`/thread/${id}/edit`}>
+                        <Button><PencilSquare/> Edit</Button>
+                    </Link>
+                    <Button onClick={() => handleDelete(id)}><TrashFill/> Delete</Button>
+                </div>
+            )}
         </ListGroup.Item>
     );
 };
