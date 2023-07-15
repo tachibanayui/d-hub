@@ -8,7 +8,7 @@ import LoginScreen from './screens/LoginScreen';
 import NotFoundScreen from './screens/NotFoundScreen';
 import CreateTags from './components/CreateTags';
 import TagList from './components/TagList';
-import TagEdit from './components/EditTag';
+import TagEdit from './components/TagEdit';
 
 
 

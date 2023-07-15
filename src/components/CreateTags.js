@@ -11,7 +11,7 @@ const CreateTags = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     const empdata = { id, topic, created: new Date().toISOString(), description };
-    if (topic.length === 0 || description.length === 0) {
+    if (topic.length === 0 || description.length === 0 ) {
       alert('Please fill all fields');
     } else {
       fetch("http://localhost:9999/tags", {
