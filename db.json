@@ -9,7 +9,7 @@
         1,
         2
       ],
-      "views": 98
+      "views": 171
     },
     {
       "id": 2,
@@ -20,7 +20,7 @@
         1,
         2
       ],
-      "views": 16
+      "views": 20
     },
     {
       "id": 3,
@@ -31,7 +31,7 @@
         1,
         2
       ],
-      "views": 7
+      "views": 9
     },
     {
       "id": 4,
@@ -42,7 +42,7 @@
         1,
         2
       ],
-      "views": 10
+      "views": 11
     },
     {
       "id": 5,
@@ -53,7 +53,7 @@
         1,
         2
       ],
-      "views": 3
+      "views": 5
     },
     {
       "title": "Introduction to Artificial Intelligence",
@@ -63,66 +63,114 @@
         1,
         2
       ],
-      "views": 1,
+      "views": 2,
       "id": 6
+    },
+    {
+      "title": "dfbsdfbsd",
+      "created": 1689431644305,
+      "userId": 3,
+      "tagIds": [],
+      "views": 2,
+      "id": 7
+    },
+    {
+      "title": "dd",
+      "created": 1689517942336,
+      "userId": 3,
+      "tagIds": [],
+      "views": 5,
+      "id": 8
     }
   ],
   "posts": [
     {
-      "id": 1,
-      "userId": 1,
-      "threadId": 1,
-      "title": "Post: 1",
-      "content": "In chat, sometime i cant chat with my friend"
-    },
-    {
-      "id": 2,
-      "userId": 2,
-      "threadId": 1,
-      "title": "Post: 2",
-      "content": "In chat, sometime i cant chat with my friend"
-    },
-    {
       "id": 3,
       "userId": 2,
       "threadId": 2,
-      "title": "Post: 3",
       "content": "In chat, sometime i cant chat with my friend"
     },
     {
       "id": 4,
       "userId": 1,
       "threadId": 2,
-      "title": "Post: 4",
       "content": "In chat, sometime i cant chat with my friend"
     },
     {
-      "id": 5,
       "userId": 1,
-      "threadId": 1,
-      "title": "Post: 4",
-      "content": "In chat, sometime i cant chat with my friend"
+      "threadId": "3",
+      "content": "ffff",
+      "id": 11
     },
     {
-      "id": 6,
       "userId": 1,
-      "threadId": 1,
-      "title": "Post: 4",
-      "content": "In chat, sometime i cant chat with my friend"
+      "threadId": "4",
+      "content": "fsdfsdf",
+      "id": 12
     },
     {
-      "id": 7,
       "userId": 1,
-      "threadId": 1,
-      "title": "Post: 4",
-      "content": "In chat, sometime i cant chat with my friend"
+      "threadId": "5",
+      "content": "èwefwef",
+      "id": 13
     },
     {
-      "id": 8,
+      "userId": 3,
+      "threadId": 7,
+      "content": "<p>bbbbbbbbbbbbbbbbbbb</p>",
+      "id": 17
+    },
+    {
+      "userId": 3,
+      "threadId": "7",
+      "content": "dfvsdfvsdfvf",
+      "id": 18
+    },
+    {
+      "userId": 3,
+      "threadId": "1",
+      "content": "<p><strong><em><u>ddddddggggggggddd</u></em></strong></p><p><strong><em><u>dddddd</u></em></strong></p>",
+      "id": 19
+    },
+    {
+      "userId": 3,
+      "content": "dddd",
+      "id": 20
+    },
+    {
+      "userId": 3,
+      "content": "",
+      "id": 21
+    },
+    {
+      "userId": 3,
+      "threadId": "1",
+      "content": "fdddddd",
+      "id": 26
+    },
+    {
+      "userId": 3,
+      "threadId": "1",
+      "content": "ddddd",
+      "id": 27
+    },
+    {
       "userId": 1,
-      "threadId": 1,
-      "title": "Post: 4",
-      "content": "In chat, sometime i cant chat with my friend"
+      "threadId": "1",
+      "content": "<p>sdsdddd</p>",
+      "id": 28
+    },
+    {
+      "userId": 3,
+      "threadId": 8,
+      "content": "<p>ddddd</p>",
+      "id": 29
+    },
+    {
+      "userId": 3,
+      "threadId": "8",
+      "content": "jjjjjj",
+      "id": 30
     }
   ],
   "tags": [

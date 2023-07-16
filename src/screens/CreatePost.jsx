@@ -2,10 +2,10 @@ import DefaultLayout from "../layouts/DefaultLayout";
 import ReactQuill from "react-quill";
 import { useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
-import { useUser } from "../hooks/useUser";
 import { useNavigate, useParams } from "react-router-dom";
+import { useUser } from "../hooks/useUser";
 
-async function createNewPost(userId, threadId, title, content) {
+async function createNewPost(userId, threadId, content) {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
@@ -15,7 +15,6 @@ async function createNewPost(userId, threadId, title, content) {
         body: JSON.stringify({
             userId,
             threadId,
-            title,
             content,
         }),
     });
@@ -26,19 +25,22 @@ async function createNewPost(userId, threadId, title, content) {
 
 const CreatePostScreen = () => {
     const { threadId } = useParams();
-    const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [user] = useUser();
     const navigate = useNavigate();
+    const [user] = useUser(); // Get logged-in user data
+    const userId = user ? user.id : null; // Access the userId property
 
     const handleCreate = () => {
-        if (!user) {
+        if (!userId) {
             navigate("/login");
             return;
         }
 
-        createNewPost(user.id, threadId, title, content).then((postId) => {
-            navigate(`/thread/${threadId}#${postId}`);
+        // Process the content to remove <p> tags
+        const processedContent = content.replace(/<\/?p>/g, "");
+
+        createNewPost(userId, threadId, processedContent).then((postId) => {
+            navigate(`/thread/${threadId}`);
         });
     };
 
@@ -51,15 +53,6 @@ const CreatePostScreen = () => {
                     </Card.Header>
                     <Card.Body>
                         <Form>
-                            <Form.Group controlId="formTitle">
-                                <Form.Label>Post Title</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter post title"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
-                                />
-                            </Form.Group>
                             <Form.Group controlId="formContent">
                                 <Form.Label>Post Content</Form.Label>
                                 <ReactQuill theme="snow" value={content} onChange={setContent} />

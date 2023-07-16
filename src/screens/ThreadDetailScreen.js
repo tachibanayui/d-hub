@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import DefaultLayout from "../layouts/DefaultLayout";
 import { Container, Card, ListGroup } from "react-bootstrap";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
+import { useUser } from "../hooks/useUser";
 
 export default function ThreadDetailScreen() {
     const { threadId } = useParams();
@@ -12,12 +13,18 @@ export default function ThreadDetailScreen() {
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 4;
+    const navigate = useNavigate();
+    const [user] = useUser(); // Get logged-in user data
 
     useEffect(() => {
         const fetchThreadDetails = async () => {
             try {
                 const threadResponse = await fetch(`http://localhost:9999/threads/${threadId}`);
                 const threadData = await threadResponse.json();
+
+                // Increment the view count
+                await updateViewCount(threadData);
+
                 setThread(threadData);
 
                 const postsResponse = await fetch(`http://localhost:9999/posts?threadId=${threadId}`);
@@ -49,6 +56,51 @@ export default function ThreadDetailScreen() {
         return users.find((user) => user.userId === userId);
     };
 
+    const updateViewCount = async (threadData) => {
+        const updatedThread = { ...threadData, views: threadData.views + 1 };
+
+        const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedThread),
+        };
+
+        await fetch(`http://localhost:9999/threads/${threadId}`, requestOptions);
+    };
+
+    const deletePost = (postId) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+
+        if (confirmDelete) {
+            fetch(`http://localhost:9999/posts/${postId}`, {
+                method: "DELETE",
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        // Remove the deleted post from the posts state
+                        setPosts(posts.filter((post) => post.id !== postId));
+                    } else {
+                        throw new Error("Failed to delete the post.");
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    };
+
+    const canEditPost = (postUserId) => {
+        // Check if the user is logged in and the post belongs to them
+        if (user && postUserId === user.id) {
+            return true;
+        }
+        // Check if the user is an admin or moderator
+        if (user && (user.role === 2 || user.role === 3)) {
+            return true;
+        }
+        return false;
+    };
+
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -74,10 +126,8 @@ export default function ThreadDetailScreen() {
                 </Card>
 
                 <h3>Posts</h3>
-                <Link to="/create-post">
-                    <h4>
-                        <Link to="/createPost">Create New Post</Link>
-                    </h4>
+                <Link to={`/createPost/${threadId}`}>
+                    <h4>Create New Post</h4>
                 </Link>
 
                 <ListGroup>
@@ -87,19 +137,30 @@ export default function ThreadDetailScreen() {
                                 <Card.Body>
                                     <Row>
                                         <Col xs={12} md={2}>
-                                            <Link to={`/post/${post.id}`}></Link>
+                                            <Link to={`/post/${post.id}`}>{getUserById(post.userId)?.name}</Link>
                                             <Card.Text>
-                                                {getUserById(post.userId)?.name} <br />
                                                 {post.userId === 1 && "User"}
                                                 {post.userId === 2 && "Moderator"}
                                                 {post.userId === 3 && "Admin"}
                                             </Card.Text>
                                         </Col>
-                                        <Col xs={12} md={10}>
-                                            <Card.Text>
-                                                <h4>{post.title}</h4>
-                                            </Card.Text>
-                                            {post.content}
+                                        <Col xs={12} md={8}>
+                                            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                                        </Col>
+                                        <Col xs={12} md={2}>
+                                            {canEditPost(post.userId) && (
+                                                <>
+                                                    <Button variant="danger" onClick={() => deletePost(post.id)}>
+                                                        Delete
+                                                    </Button>
+                                                    <Button
+                                                        variant="primary"
+                                                        onClick={() => navigate(`/editPost/${post.id}`)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                </>
+                                            )}
                                         </Col>
                                     </Row>
                                 </Card.Body>
