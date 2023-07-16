@@ -12,7 +12,6 @@ const TagList = () => {
     const [user] = useUser();
     const [tags, setTags] = useState([]);
     const navigate = useNavigate();
-    console.log(user);
 
     useEffect(() => {
         fetch("http://localhost:9999/tags")

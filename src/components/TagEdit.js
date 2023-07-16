@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Form, FormGroup } from "react-bootstrap"
 import { Link, useNavigate, useParams } from "react-router-dom"
+import { toast } from "react-toastify";
 const TagEdit = () => {
   const { tid } = useParams();
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ const TagEdit = () => {
         setCreated(res.created);
         setDescription(res.description);
         setViews(res.views);
-        console.log(topic);
       })
       .catch((err) => {
         console.log(err.message);
@@ -31,7 +31,7 @@ const TagEdit = () => {
     e.preventDefault();
     const empdata = { id, topic, created, description, views };
     if (topic.length === 0 || description.length === 0 || views.length <= 0) {
-      alert('Please fill all fields');
+      toast.error("Please fill all fields");
     }
     else {
       fetch(" http://localhost:9999/tags/" + tid, {
@@ -40,7 +40,7 @@ const TagEdit = () => {
         body: JSON.stringify(empdata),
       })
         .then(() => {
-          alert("Saved successfully.");
+          toast.success("Saved successfully.");
           navigate("/tag");
         })
         .catch((err) => {
