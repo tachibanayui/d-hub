@@ -19,7 +19,7 @@ export default function EditProfile() {
     }, [profileId]);
 
     const handleUpdate = () => {
-        if (user.id === profileId || user.role >= 2) {
+        if (user?.id === profileId || user?.role >= 2) {
             fetch(`http://localhost:9999/users/${profileId}`, {
                 method: "PUT",
                 headers: {
@@ -139,7 +139,7 @@ export default function EditProfile() {
                                         class="sel"
                                         required
                                         value={data?.dob}
-                                        onChange={(e) => setData({ ...data, dob: e.target.value })}
+                                        onChange={(e) => setData({ ...data, gender: parseInt(e.target.value) })}
                                     >
                                         <option value="0">Male</option>
                                         <option value="1">Female</option>

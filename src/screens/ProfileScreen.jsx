@@ -13,8 +13,8 @@ const ProfileScreen = () => {
         <DefaultLayout>
             <Container>
                 <EditProfile />
-                {(user.id == profileId || user.role >= 2) && <ChangePassword />}
-                {user.role === 3 && <RoleAssignment />}
+                {(user?.id == profileId || user?.role >= 2) && <ChangePassword />}
+                {user?.role === 3 && <RoleAssignment />}
             </Container>
         </DefaultLayout>
     );
