@@ -7,11 +7,11 @@ import Badge from "react-bootstrap/Badge";
 import DefaultLayout from "../layouts/DefaultLayout";
 import { useUser } from "../hooks/useUser";
 import { Pencil, Trash } from "react-bootstrap-icons";
+import { toast } from "react-toastify";
 
 const TagList = () => {
     const [user] = useUser();
     const [tags, setTags] = useState([]);
-    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://localhost:9999/tags")
@@ -27,8 +27,8 @@ const TagList = () => {
                 method: "DELETE",
             })
                 .then(() => {
-                    alert("Delete success");
-                    navigate("/tag");
+                    toast.success("Delete successfully!");
+                    setTags(tags.filter((t) => t.id !== id));
                 })
                 .catch((err) => {
                     console.log(err.message);
@@ -82,7 +82,7 @@ const TagList = () => {
                                             {user?.role >= 2 && (
                                                 <React.Fragment>
                                                     <td>
-                                                        <Link to={"/"} onClick={() => handleDelete(t.id)}>
+                                                        <Link to={"#"} onClick={() => handleDelete(t.id)}>
                                                             <Trash></Trash>
                                                         </Link>
                                                     </td>
