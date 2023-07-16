@@ -14,6 +14,8 @@ import TagList from "./components/TagList";
 import TagEdit from "./components/TagEdit";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
+import ProfileScreen from "./screens/ProfileScreen";
+import UserListScreen from "./screens/UserListScreen";
 
 function App() {
     return (
@@ -26,6 +28,8 @@ function App() {
                 <Route path="/search" element={<SearchThreads />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/profile/:profileId" element={<ProfileScreen />} />
+                <Route path="/user-list" element={<UserListScreen />} />
 
                 <Route path="/tag/create" element={<CreateTags />} />
                 <Route path="/tag" element={<TagList />} />
