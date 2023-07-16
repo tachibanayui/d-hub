@@ -25,11 +25,6 @@ export default function Header() {
                             </Link>
                         </Nav.Link>
                         <Nav.Link>
-                            <Link className="link-unstyled" to="/user">
-                                Users
-                            </Link>
-                        </Nav.Link>
-                        <Nav.Link>
                             <Link className="link-unstyled" to="/report">
                                 Report
                             </Link>

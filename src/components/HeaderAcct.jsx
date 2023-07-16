@@ -22,9 +22,9 @@ const HeaderAcct = () => {
                 }
                 id="basic-nav-dropdown"
             >
-                <NavDropdown.Item href="/my-profile">My Profile</NavDropdown.Item>
+                <NavDropdown.Item href={`/profile/${user.id}`}>My Profile</NavDropdown.Item>
                 <NavDropdown.Item href="/my-reports">My Reports</NavDropdown.Item>
-                {user.role >= 2 && <NavDropdown.Item href="#action/3.3">Admin dashboard </NavDropdown.Item>}
+                {user.role >= 2 && <NavDropdown.Item href="/user-list">Admin dashboard </NavDropdown.Item>}
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleSignOut}>Sign out</NavDropdown.Item>
             </NavDropdown>

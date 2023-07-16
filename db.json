@@ -142,62 +142,67 @@
     {
       "id": 1,
       "name": "Vo Sy Hieu",
-      "dob": "19/11/2002",
+      "dob": "2023-07-10",
       "account": "hieuvs19",
       "password": "123456",
       "phoneNumber": "0123456789",
       "city": "Ha Noi",
       "gender": 0,
       "gmail": "hieuvs19@gmail.com",
-      "role": 1
+      "role": 3,
+      "isBan": false
     },
     {
       "id": 2,
       "name": "Nguyen Van A",
-      "dob": "11/2/1989",
+      "dob": "2003-07-07",
       "account": "Anv1234",
       "password": "123456",
       "phoneNumber": "0123255789",
       "city": "Sai Gon",
       "gender": 0,
       "gmail": "avip123567@gmail.com",
-      "role": 2
+      "role": 2,
+      "isBan": false
     },
     {
       "id": 3,
       "name": "Vu Thi Nuong",
-      "dob": "9/12/2000",
+      "dob": "2003-07-07",
       "account": "nuong123",
       "password": "123456",
       "phoneNumber": "0948367583",
       "city": "Da Nang",
       "gender": 1,
       "gmail": "nuongnehihi@gmail.com",
-      "role": 3
+      "role": 3,
+      "isBan": false
     },
     {
       "id": 4,
       "name": "Pham Van Cao",
-      "dob": "4/10/1999",
+      "dob": "2003-07-07",
       "account": "Cao123456",
       "password": "1234567",
       "phoneNumber": "0947876543",
       "city": "Can Tho",
       "gender": 0,
       "gmail": "Cao123456@gmail.com",
-      "role": 3
+      "role": 3,
+      "isBan": false
     },
     {
       "id": 5,
       "name": "Vuong Sy Duy",
-      "dob": "18/11/2002",
+      "dob": "2003-07-07",
       "account": "duyvs123",
       "password": "123456789",
       "phoneNumber": "0984765893",
       "city": "Ha Noi",
       "gender": 0,
       "gmail": "duyvs1811@gmail.com",
-      "role": 3
+      "role": 3,
+      "isBan": false
     }
   ],
   "userReports": [
