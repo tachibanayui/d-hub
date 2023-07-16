@@ -1,71 +1,45 @@
 {
   "threads": [
-    {
-      "id": 1,
-      "title": "Introduction to Artificial Intelligence",
-      "created": 1687010447656,
-      "userId": 1,
-      "tagIds": [
-        1,
-        2
-      ],
-      "views": 0
-    },
-    {
-      "id": 2,
-      "title": "Machine Learning Algorithms and Applications",
-      "created": 1687010509821,
-      "userId": 2,
-      "tagIds": [
-        1,
-        2
-      ],
-      "views": 12
-    },
-    {
-      "id": 3,
-      "title": "Web Development Best Practices",
-      "created": 1687010612154,
-      "userId": 3,
-      "tagIds": [
-        1,
-        2
-      ],
-      "views": 5
-    },
-    {
-      "id": 4,
-      "title": "Cybersecurity Threats and Countermeasures",
-      "created": 1687010731547,
-      "userId": 2,
-      "tagIds": [
-        1,
-        2
-      ],
-      "views": 8
-    },
-    {
-      "id": 5,
-      "title": "Data Science Tools and Techniques uqriheufhwe",
-      "created": 1687010863276,
-      "userId": 4,
-      "tagIds": [
-        1,
-        2
-      ],
-      "views": 3
-    },
-    {
-      "title": "Introduction to Artificial Intelligence",
-      "created": 1687010447656,
-      "userId": 1,
-      "tagIds": [
-        1,
-        2
-      ],
-      "views": 0,
-      "id": 6
-    }
+      {
+          "id": 1,
+          "title": "Introduction to Artificial Intelligence",
+          "created": 1687010447656,
+          "userId": 1,
+          "tagIds": [1, 2],
+          "views": 2
+      },
+      {
+          "id": 2,
+          "title": "Machine Learning Algorithms and Applications",
+          "created": 1687010509821,
+          "userId": 2,
+          "tagIds": [1, 2],
+          "views": 12
+      },
+      {
+          "id": 3,
+          "title": "Web Development Best Practices",
+          "created": 1687010612154,
+          "userId": 3,
+          "tagIds": [1, 2],
+          "views": 5
+      },
+      {
+          "id": 4,
+          "title": "Cybersecurity Threats and Countermeasures",
+          "created": 1687010731547,
+          "userId": 2,
+          "tagIds": [1, 2],
+          "views": 8
+      },
+      {
+          "id": 5,
+          "title": "Data Science Tools and Techniques",
+          "created": 1687010863276,
+          "userId": 4,
+          "tagIds": [1, 2],
+          "views": 3
+      }
   ],
   "posts": [
     {

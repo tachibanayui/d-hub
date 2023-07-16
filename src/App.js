@@ -1,4 +1,5 @@
 import "./App.css";
+import "./App.css";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ThreadListScreen from './screens/ThreadListScreen';
@@ -16,6 +17,8 @@ import Login from "./screens/Login";
 import Register from "./screens/Register";
 import ProfileScreen from "./screens/ProfileScreen";
 import UserListScreen from "./screens/UserListScreen";
+import CreatePostScreen from "./screens/CreatePost";
+import EditPostScreen from "./screens/EditPost";
 
 function App() {
     return (
@@ -25,6 +28,8 @@ function App() {
                 <Route path="/thread/:threadId" element={<ThreadDetailScreen />} />
                 <Route path="/thread/new" element={<CreateThreadScreen />} />
                 <Route path="/thread/:threadId/edit" element={<EditThreadScreen />} />
+                <Route path="/createPost/:threadId" element={<CreatePostScreen />} />
+                <Route exact path="/editPost/:postId" element={<EditPostScreen />} />
                 <Route path="/search" element={<SearchThreads />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
