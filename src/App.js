@@ -1,17 +1,17 @@
 import "./App.css";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ThreadListScreen from "./screens/ThreadListScreen";
-import ThreadDetailScreen from "./screens/ThreadDetailScreen";
-import CreateThreadScreen from "./screens/CreateThreadScreen";
-import LoginScreen from "./screens/LoginScreen";
-import NotFoundScreen from "./screens/NotFoundScreen";
+import ThreadListScreen from './screens/ThreadListScreen';
+import ThreadDetailScreen from './screens/ThreadDetailScreen';
+import CreateThreadScreen from './screens/CreateThreadScreen';
+import LoginScreen from './screens/LoginScreen';
+import NotFoundScreen from './screens/NotFoundScreen';
+import CreateTags from './components/CreateTags';
+import TagList from './components/TagList';
+import TagEdit from './components/TagEdit';
 import SearchThreads from "./components/SearchThreads";
-import CreateTags from "./components/CreateTags";
 import EditThreadScreen from "./screens/EditThreadScreen";
 import { ToastContainer } from "react-toastify";
-import TagList from "./components/TagList";
-import TagEdit from "./components/TagEdit";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
 import ProfileScreen from "./screens/ProfileScreen";

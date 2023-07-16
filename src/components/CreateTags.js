@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Form, FormGroup } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 const CreateTags = () => {
   const navigate = useNavigate();
   const [id, setId] = useState(0);
@@ -11,8 +12,8 @@ const CreateTags = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     const empdata = { id, topic, created: new Date().toISOString(), description };
-    if (topic.length === 0 || description.length === 0) {
-      alert('Please fill all fields');
+    if (topic.length === 0 || description.length === 0 ) {
+      toast.error('Please fill all fields');
     } else {
       fetch("http://localhost:9999/tags", {
         method: "POST",
@@ -20,7 +21,7 @@ const CreateTags = () => {
         body: JSON.stringify({ ...empdata, views: 0 }),
       })
         .then(() => {
-          alert("Add Tags successfully.");
+          toast.success("Add Tags successfully.");
           navigate("/tag");
         })
         .catch((err) => {
