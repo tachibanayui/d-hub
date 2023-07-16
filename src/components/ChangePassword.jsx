@@ -10,6 +10,10 @@ const ChangePassword = () => {
 
     const handleUpdate = () => {
         if(oldPassword !== user.password) return toast("Old password is incorrect!")
+        if (!newPassword) {
+            toast.error("Please fill in all fields!");
+            return;
+        }
 
         fetch(`http://localhost:9999/users/${user.id}`, {
             method: "PUT",
@@ -37,6 +41,7 @@ const ChangePassword = () => {
                     <Form.Control
                         type="password"
                         placeholder="Old password"
+                        required
                         value={oldPassword}
                         onChange={(e) => setOldPassword(e.target.value)}
                     />
@@ -44,6 +49,7 @@ const ChangePassword = () => {
                     <span style={{ color: "red" }}>*</span>
                     <Form.Control
                         type="password"
+                        required
                         placeholder="New password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}

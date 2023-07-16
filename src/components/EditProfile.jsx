@@ -20,6 +20,11 @@ export default function EditProfile() {
 
     const handleUpdate = () => {
         if (user?.id === profileId || user?.role >= 2) {
+            if (!data?.name || !data?.gmail) {
+                toast.error("Please fill in all fields!");
+                return;
+            }
+
             fetch(`http://localhost:9999/users/${profileId}`, {
                 method: "PUT",
                 headers: {
@@ -101,15 +106,12 @@ export default function EditProfile() {
                                 <Form.Group className="mb-3" controlId="formGroupPhone">
                                     <Form.Label>
                                         Phone
-                                        <span style={{ color: "red" }}>*</span>
                                     </Form.Label>
                                     <Form.Control
                                         type="phone"
-                                        required
                                         value={data?.phoneNumber}
                                         onChange={(e) => setData({ ...data, phoneNumber: e.target.value })}
                                     />
-                                    <p style={{ color: "red" }}>{data?.phoneNumber ? "" : "Please input phone"}</p>
                                 </Form.Group>
                             </Col>
                             <Col>
