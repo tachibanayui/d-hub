@@ -108,20 +108,6 @@
       "created": 232,
       "description": "Discussions and exchanges of opinions about this topic.",
       "views": 15
-    },
-    {
-      "id": 4,
-      "topic": "News",
-      "created": 245,
-      "description": "The latest news about this topic.",
-      "views": 16
-    },
-    {
-      "id": 5,
-      "topic": "Knowledge",
-      "created": 32,
-      "description": "Basic and advanced knowledge about this topic.",
-      "views": 16
     }
   ],
   "users": [
@@ -231,6 +217,27 @@
       "title": "Profile Picture Violation",
       "content": "User456 has an inappropriate profile picture containing explicit content.",
       "created": 12561243
+    },
+    {
+      "id": 6,
+      "title": "adbc",
+      "created": "2023-07-16T13:23:25.438Z",
+      "description": "ădwadawdw",
+      "views": 0
+    },
+    {
+      "id": 7,
+      "title": "ădad",
+      "created": "2023-07-16T13:25:53.021Z",
+      "description": "ădwadw",
+      "views": 0
+    },
+    {
+      "id": 8,
+      "title": "tr",
+      "created": "2023-07-16T13:28:14.045Z",
+      "description": "ădawdawd",
+      "views": 0
     }
   ]
 }

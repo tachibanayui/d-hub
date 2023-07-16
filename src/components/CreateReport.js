@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Form, FormGroup } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
-const CreateTags = () => {
+const CreateReport = () => {
     const navigate = useNavigate();
     const [id, setId] = useState(0);
     const [title, setTitle] = useState("");
@@ -20,8 +20,8 @@ const CreateTags = () => {
                 body: JSON.stringify({ ...empdata, views: 0 }),
             })
                 .then(() => {
-                    alert("Add Tags successfully.");
-                    navigate("/tag");
+                    alert("Add Report successfully.");
+                    navigate("/report");
                 })
                 .catch((err) => {
                     console.log(err.message);
@@ -31,7 +31,7 @@ const CreateTags = () => {
 
     return (
         <Card>
-            <Card.Header style={{ textAlign: "center" }}>Create Tags</Card.Header>
+            <Card.Header style={{ textAlign: "center" }}>Create Report</Card.Header>
             <Card.Body>
                 <Form onSubmit={handlesubmit}>
 
@@ -79,9 +79,9 @@ const CreateTags = () => {
                 </Form>
             </Card.Body>
             <Card.Footer>
-                <Link to={"/tag"}>Back to List</Link>
+                <Link to={"/report"}>Back to List</Link>
             </Card.Footer>
         </Card>
     );
 };
-export default CreateTags;
+export default CreateReport;

@@ -28,12 +28,14 @@ const CreateTags = () => {
         });
     }
   };
-  
+
   return (
     <Card>
       <Card.Header style={{ textAlign: "center" }}>Create Tags</Card.Header>
-          <Card.Body>
-        <Form onSubmit={handlesubmit}>        
+      <Card.Body>
+        <Form onSubmit={handlesubmit}>
+
+
 
           <Form.Group>
             <Form.Label>
@@ -52,7 +54,7 @@ const CreateTags = () => {
 
           </Form.Group>
 
-          
+
           <Form.Group>
             <Form.Label>
               Description<span style={{ color: "red" }}>*</span>
