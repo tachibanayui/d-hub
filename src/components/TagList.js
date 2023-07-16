@@ -55,7 +55,7 @@ const TagList = () => {
                     <th>Created</th>
                     <th>Description</th>
                     <th>Views</th>
-                    {user.role >= 2 && (
+                    {user?.role >= 2 && (
                       <React.Fragment>
                         <th colSpan={2}>Action</th>
                       </React.Fragment>
@@ -72,7 +72,7 @@ const TagList = () => {
                       <td>{new Date(t.created).toLocaleDateString("en-US")}</td>
                       <td>{t.description}</td>
                       <td>{t.views}</td>
-                      {user.role >= 2 && (
+                      {user?.role >= 2 && (
                         <React.Fragment>
                           <td><Link to={"/"} onClick={() => handleDelete(t.id)}><Trash></Trash></Link></td>
                           <td><Link to={'/tag/edit/' + t.id}><Pencil></Pencil></Link></td>
