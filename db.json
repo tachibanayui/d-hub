@@ -9,7 +9,7 @@
         1,
         2
       ],
-      "views": 2
+      "views": 5
     },
     {
       "id": 2,
@@ -20,7 +20,7 @@
         1,
         2
       ],
-      "views": 12
+      "views": 13
     },
     {
       "id": 3,
@@ -53,7 +53,7 @@
         1,
         2
       ],
-      "views": 3
+      "views": 4
     }
   ],
   "posts": [
@@ -74,6 +74,12 @@
     },
     {
       "id": 5
+    },
+    {
+      "userId": 1,
+      "threadId": "1",
+      "content": "<span style=\"background-color: transparent; color: rgb(0, 0, 0);\">&nbsp;the process of posting a reply or comment within a thread</span>",
+      "id": 6
     }
   ],
   "tags": [
@@ -222,9 +228,8 @@
     {
       "id": 7,
       "title": "ădad",
-      "created": "2023-07-16T13:25:53.021Z",
-      "description": "ădwadw",
-      "views": 0
+      "created": "2023-07-18T08:43:50.187Z",
+      "comment": "ok"
     },
     {
       "id": 8,
@@ -238,6 +243,13 @@
       "title": "kwe",
       "created": "2023-07-18T08:31:40.302Z",
       "description": "epofjw",
+      "views": 0
+    },
+    {
+      "id": 10,
+      "title": "eiofho",
+      "created": "2023-07-18T08:44:23.165Z",
+      "description": "ioehqfioqh",
       "views": 0
     }
   ]
