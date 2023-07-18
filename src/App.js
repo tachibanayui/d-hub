@@ -19,6 +19,8 @@ import ProfileScreen from "./screens/ProfileScreen";
 import UserListScreen from "./screens/UserListScreen";
 import CreatePostScreen from "./screens/CreatePost";
 import EditPostScreen from "./screens/EditPost";
+import CreateReport from "./components/CreateReport";
+import Report from "./screens/Report";
 
 function App() {
     return (
@@ -35,8 +37,9 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile/:profileId" element={<ProfileScreen />} />
                 <Route path="/user-list" element={<UserListScreen />} />
-
+                <Route path="/report" element={<Report />} />
                 <Route path="/tag/create" element={<CreateTags />} />
+                <Route path="/report/create" element={<CreateReport />} />
                 <Route path="/tag" element={<TagList />} />
                 <Route path="/tag/edit/:tid" element={<TagEdit />} />
 
