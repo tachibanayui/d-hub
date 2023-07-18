@@ -1,45 +1,60 @@
 {
   "threads": [
-      {
-          "id": 1,
-          "title": "Introduction to Artificial Intelligence",
-          "created": 1687010447656,
-          "userId": 1,
-          "tagIds": [1, 2],
-          "views": 2
-      },
-      {
-          "id": 2,
-          "title": "Machine Learning Algorithms and Applications",
-          "created": 1687010509821,
-          "userId": 2,
-          "tagIds": [1, 2],
-          "views": 12
-      },
-      {
-          "id": 3,
-          "title": "Web Development Best Practices",
-          "created": 1687010612154,
-          "userId": 3,
-          "tagIds": [1, 2],
-          "views": 5
-      },
-      {
-          "id": 4,
-          "title": "Cybersecurity Threats and Countermeasures",
-          "created": 1687010731547,
-          "userId": 2,
-          "tagIds": [1, 2],
-          "views": 8
-      },
-      {
-          "id": 5,
-          "title": "Data Science Tools and Techniques",
-          "created": 1687010863276,
-          "userId": 4,
-          "tagIds": [1, 2],
-          "views": 3
-      }
+    {
+      "id": 1,
+      "title": "Introduction to Artificial Intelligence",
+      "created": 1687010447656,
+      "userId": 1,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 2
+    },
+    {
+      "id": 2,
+      "title": "Machine Learning Algorithms and Applications",
+      "created": 1687010509821,
+      "userId": 2,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 12
+    },
+    {
+      "id": 3,
+      "title": "Web Development Best Practices",
+      "created": 1687010612154,
+      "userId": 3,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 5
+    },
+    {
+      "id": 4,
+      "title": "Cybersecurity Threats and Countermeasures",
+      "created": 1687010731547,
+      "userId": 2,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 8
+    },
+    {
+      "id": 5,
+      "title": "Data Science Tools and Techniques",
+      "created": 1687010863276,
+      "userId": 4,
+      "tagIds": [
+        1,
+        2
+      ],
+      "views": 3
+    }
   ],
   "posts": [
     {
@@ -200,9 +215,9 @@
     {
       "id": 6,
       "title": "adbc",
-      "created": "2023-07-16T13:23:25.438Z",
-      "description": "ădwadawdw",
-      "views": 0
+      "created": "2023-07-18T08:38:51.642Z",
+      "comment": "OK",
+      "status": "Reject"
     },
     {
       "id": 7,
@@ -216,6 +231,13 @@
       "title": "tr",
       "created": "2023-07-16T13:28:14.045Z",
       "description": "ădawdawd",
+      "views": 0
+    },
+    {
+      "id": 9,
+      "title": "kwe",
+      "created": "2023-07-18T08:31:40.302Z",
+      "description": "epofjw",
       "views": 0
     }
   ]

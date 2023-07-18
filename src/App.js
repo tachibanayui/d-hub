@@ -20,6 +20,7 @@ import UserListScreen from "./screens/UserListScreen";
 import CreatePostScreen from "./screens/CreatePost";
 import EditPostScreen from "./screens/EditPost";
 import CreateReport from "./components/CreateReport";
+import ReportEdit from "./components/ReportEdit";
 import Report from "./screens/Report";
 
 function App() {
@@ -38,8 +39,9 @@ function App() {
                 <Route path="/profile/:profileId" element={<ProfileScreen />} />
                 <Route path="/user-list" element={<UserListScreen />} />
                 <Route path="/report" element={<Report />} />
-                <Route path="/tag/create" element={<CreateTags />} />
                 <Route path="/report/create" element={<CreateReport />} />
+                <Route path="/report/edit/:tid" element={<ReportEdit />} />
+                <Route path="/tag/create" element={<CreateTags />} />
                 <Route path="/tag" element={<TagList />} />
                 <Route path="/tag/edit/:tid" element={<TagEdit />} />
 
