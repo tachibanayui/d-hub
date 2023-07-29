@@ -25,5 +25,5 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         return;
     }
 
-    res.status(200).json({ message: "success" });
+    res.status(200).json({ message: "Change profile image successfully!" });
 }

@@ -2,11 +2,14 @@
 import UploadButton from "./UploadButton";
 import { useState } from "react";
 import ProfileImage from "@/components/ProfileImage";
+import { toast } from "react-toastify";
 
-const ProfileImageEditor = ({profileId, img}: ProfileImageEditorProps) => {
+const ProfileImageEditor = ({ profileId, img }: ProfileImageEditorProps) => {
+    const [isSaving, setIsSaving] = useState(false);
     const [url, setUrl] = useState<string | undefined>(img);
 
     const handleChange = async (url: string) => {
+        setIsSaving(true);
         const res = await fetch(`/api/edit-pfp-img/${profileId}`, {
             method: "POST",
             headers: {
@@ -15,14 +18,15 @@ const ProfileImageEditor = ({profileId, img}: ProfileImageEditorProps) => {
             body: JSON.stringify({ url }),
         });
 
+        const json = await res.json();
         if (res.status >= 300) {
-            const json = await res.json();
-            alert(json.message);
-            return;
+            toast.error(json.message);
+        } else {
+            toast.success(json.message);
+            setUrl(url);
         }
 
-        setUrl(url);
-        alert("Profile picture updated!");
+        setIsSaving(false);
     };
 
 
@@ -31,7 +35,7 @@ const ProfileImageEditor = ({profileId, img}: ProfileImageEditorProps) => {
             <div className="card-header">Profile Picture</div>
             <div className="card-body text-center">
                 <ProfileImage
-                    className="img-account-profile rounded-circle mb-2"
+                    className="img-account-profile rounded-circle mb-2 object-fit-cover"
                     url={url}
                     width={300}
                     height={300}
@@ -39,7 +43,7 @@ const ProfileImageEditor = ({profileId, img}: ProfileImageEditorProps) => {
                 <div className="small font-italic text-muted mb-4">
                     JPG or PNG no larger than 5 MB
                 </div>
-                <UploadButton onSuccess={(e) => handleChange(e)} />
+                <UploadButton onSuccess={(e) => handleChange(e)} isSaving={isSaving} />
             </div>
         </div>
     );

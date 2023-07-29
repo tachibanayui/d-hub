@@ -9,7 +9,7 @@ const ProfileImage = ({ url, width, height, className }: ProfileImageProps) => {
                 src={url}
                 width={width}
                 height={height}
-                alt="profile image object-fit-cover"
+                alt="profile image"
             />
         );
     } else {
@@ -19,7 +19,7 @@ const ProfileImage = ({ url, width, height, className }: ProfileImageProps) => {
                 src={profilePic}
                 width={width}
                 height={height}
-                alt="profile image object-fit-cover"
+                alt="profile image"
             />
         );
     }

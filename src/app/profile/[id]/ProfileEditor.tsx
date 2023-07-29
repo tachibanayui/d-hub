@@ -2,8 +2,15 @@
 import { useForm } from "react-hook-form";
 import { EditProfileDTO, editProfileDto } from "@/models/user.client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { ToastContainer, toast } from "@/reexports/reactToasify";
 
-const ProfileEditor = ({ profileId, profileData, email }: ProfileEditorProps) => {
+const ProfileEditor = ({
+    profileId,
+    profileData,
+    email,
+}: ProfileEditorProps) => {
+    const [isSending, setIsSending] = useState(false);
     const {
         register,
         watch,
@@ -11,25 +18,27 @@ const ProfileEditor = ({ profileId, profileData, email }: ProfileEditorProps) =>
         formState: { errors },
     } = useForm<EditProfileDTO>({
         resolver: zodResolver(editProfileDto),
-        values: profileData,
+        defaultValues: profileData,
     });
 
     const onSubmit = async (data: EditProfileDTO) => {
+        setIsSending(true);
         const res = await fetch(`/api/profile/${profileId}`, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         });
+        const json = await res.json();
 
         if (res.status >= 300) {
-            const json = await res.json();
-            alert(json.message);
-            return;
+            toast.error(json.message);
+        } else {
+            toast.success(json.message);
         }
 
-        console.log(res);
+        setIsSending(false);
     };
 
     return (
@@ -150,7 +159,13 @@ const ProfileEditor = ({ profileId, profileData, email }: ProfileEditorProps) =>
                         </div>
                     </div>
                     {/* Save changes button*/}
-                    <button className="btn btn-primary">Save changes</button>
+                    <button className="btn btn-primary" disabled={isSending}>
+                        {isSending && <span
+                            className="spinner-grow spinner-grow-sm me-2"
+                            aria-hidden="true"
+                        />}
+                        <span>{isSending ? 'Saving...' : 'Save profile'}</span>
+                    </button>
                 </form>
             </div>
         </div>

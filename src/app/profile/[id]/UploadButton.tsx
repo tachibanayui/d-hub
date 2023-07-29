@@ -2,7 +2,7 @@
 import { CldUploadWidget } from "next-cloudinary";
 import { useState } from "react";
 
-const UploadButton = ({onSuccess}: UploadButtonProps) => {
+const UploadButton = ({onSuccess, isSaving}: UploadButtonProps) => {
     const [url, setUrl] = useState();
 
     return (
@@ -33,8 +33,15 @@ const UploadButton = ({onSuccess}: UploadButtonProps) => {
                         className="btn btn-primary"
                         type="button"
                         onClick={handleOnClick}
+                        disabled={isSaving}
                     >
-                        Upload an Image
+                        {isSaving && (
+                            <span
+                                className="spinner-grow spinner-grow-sm me-2"
+                                aria-hidden="true"
+                            />
+                        )}
+                        <span>{isSaving ? "Saving..." : "Upload an Image"}</span>
                     </button>
                 );
             }}
@@ -46,4 +53,5 @@ export default UploadButton;
 
 export interface UploadButtonProps { 
     onSuccess?(url: string): void;
+    isSaving?: boolean;
 }

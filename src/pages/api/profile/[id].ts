@@ -7,9 +7,9 @@ export default async function handler(
     res: NextApiResponse
 ) {
     if (req.method === "GET") {
-        handleGet(req, res);
+        await handleGet(req, res);
     } else {
-        handlePost(req, res);
+        await handlePost(req, res);
     }
 }
 
@@ -24,9 +24,11 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
     const pfp = editProfileDto.parse(req.body);
     const rs = await applyEditProfile(id, pfp);
     if (rs) {
-        res.status(200).json({});
+        res.status(200).json({ message: 'Profile saved successfully' });
+        return;
     } else {
-        res.status(400).json({message: "Error edit profile"});
+        res.status(400).json({ message: "Error edit profile" });
+        return;
     }
 }
 
