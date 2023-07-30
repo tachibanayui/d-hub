@@ -1,3 +1,4 @@
+import { retain } from "@/utils/zodObject";
 import z from "zod";
 
 export const usernameZod = z
@@ -18,10 +19,7 @@ export const registerDto = z
     );
 export type RegisterDTO = z.infer<typeof registerDto>;
 
-export const loginDto = z.object({
-    email: registerDto.innerType().shape.email,
-    password: registerDto.innerType().shape.password,
-});
+export const loginDto = retain(registerDto.innerType(), ["email", "password"]);
 export type LoginDTO = z.infer<typeof loginDto>;
 
 export const profileZod = z.object({
@@ -33,14 +31,15 @@ export const profileZod = z.object({
     role: z.union([z.literal(1), z.literal(2), z.literal(3)]).default(1),
 });
 
-export type Profile = z.infer<typeof profileZod>
+export type Profile = z.infer<typeof profileZod>;
 
-export const editProfileDto = z.object({
+export const editProfileDto = retain(profileZod, [
+    "motto",
+    "location",
+    "phone",
+]).extend({
     username: usernameZod,
-    motto: profileZod.shape.motto,
-    location: profileZod.shape.location,
-    phone: profileZod.shape.phone,
     dob: z.string().optional(),
 });
 
-export type EditProfileDTO = z.infer<typeof editProfileDto>
+export type EditProfileDTO = z.infer<typeof editProfileDto>;

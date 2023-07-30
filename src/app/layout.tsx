@@ -6,6 +6,9 @@ import { Inter } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { SessionProvider } from "@/reexports/nextAuthReact";
 import { ToastContainer } from "@/reexports/reactToasify";
+import Header from "./Header";
+import BootstrapImport from "./BootstrapImport";
+import Footer from "./Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +25,21 @@ export default function RootLayout({
     return (
         <html lang="en" bs-theme-light="true">
             <body className={inter.className}>
-                <SessionProvider>{children}</SessionProvider>
+                <SessionProvider>
+                    <div className="fill d-flex flex-column">
+                        <div className="full-height-fixed">
+                            <Header />
+                        </div>
+                        <main className="full-height-grow">
+                            {children}
+                        </main>
+                        <div className="full-height-fixed">
+                            <Footer />
+                        </div>
+                    </div>
+                </SessionProvider>
                 <ToastContainer />
+                <BootstrapImport />
             </body>
         </html>
     );

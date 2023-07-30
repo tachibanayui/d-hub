@@ -17,3 +17,11 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+
+.full-height-fixed {
+    flex: 0 1 auto;
+}
+
+.full-height-grow {
+    flex: 1 1 auto;
+}

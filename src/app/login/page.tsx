@@ -39,12 +39,12 @@ const RegisterPage = () => {
 
     return (
         <main className="container">
-            <div className="card">
+            <div className="card m-3">
                 <div className="card-header">
                     <h1>Login</h1>
                 </div>
                 <div className="card-body row">
-                    <div className="col">
+                    <div className="col d-none d-lg-block">
                         <Image
                             src="/register-banner.jpg"
                             alt="register image"
