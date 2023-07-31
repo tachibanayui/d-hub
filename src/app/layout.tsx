@@ -27,7 +27,7 @@ export default function RootLayout({
             <body className={inter.className}>
                 <SessionProvider>
                     <div className="fill d-flex flex-column">
-                        <div className="full-height-fixed">
+                        <div className="full-height-fixed sticky-top">
                             <Header />
                         </div>
                         <main className="full-height-grow">

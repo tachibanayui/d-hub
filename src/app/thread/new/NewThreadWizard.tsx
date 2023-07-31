@@ -14,7 +14,9 @@ import { CreateThreadDTO, createThreadDto } from "@/models/thread.client";
 import ThreadHero from "@/components/ThreadHero";
 import PostContent from "@/components/PostContent";
 
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
 import "react-quill/dist/quill.snow.css";
 import { CldUploadWidget } from "next-cloudinary";
 import { Tag } from "@/models/tags.client";
@@ -23,6 +25,8 @@ import { useSession } from "@/reexports/nextAuthReact";
 import { Profile, roleNumberToString } from "@/models/user.client";
 import { toast } from "@/reexports/reactToasify";
 import { useState } from "react";
+
+
 
 const NewThreadWizard = ({ tags, userProfile }: NewThreadWizardProps) => {
     const [isCreating, setIsCreating] = useState(false);
@@ -231,7 +235,10 @@ const NewThreadWizard = ({ tags, userProfile }: NewThreadWizardProps) => {
             </div>
 
             <div className="col-12 col-lg-6 bg-light p-2 p-lg-5 position-relative">
-                <div className="sticky-top">
+                <div className="sticky-top" style={{
+                    zIndex: 1,
+                    top: '4.5rem'
+                }}>
                     {/* Preview */}
                     <h1 className="display-5">Thread preview: </h1>
                     <i>Here&apos;s how your post going to look like </i>

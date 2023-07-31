@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const Header = () => {
     return (
-        <header className="sticky-top">
+        <header >
             <nav
                 className="navbar bg-primary navbar-expand-lg"
                 data-bs-theme="dark"
