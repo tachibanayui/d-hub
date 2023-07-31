@@ -8,7 +8,6 @@ export default function Home() {
     return (
         <main>
             <h1>Test</h1>
-            <TagSelector tags={["12", "34"]} />
         </main>
     );
 }

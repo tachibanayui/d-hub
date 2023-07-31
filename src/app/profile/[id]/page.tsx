@@ -2,7 +2,6 @@ import { getProfile, getUserById } from "@/models/user";
 import ProfileEditor from "./ProfileEditor";
 import ProfileImageEditor from "./ProfileImageEditor";
 import { notFound } from "next/navigation";
-import Loading from "./loading";
 
 const ProfilePage = async ({ params }: ProfilePageProps) => {
     const pfp = await getProfile(params.id);

@@ -43,3 +43,17 @@ export const editProfileDto = retain(profileZod, [
 });
 
 export type EditProfileDTO = z.infer<typeof editProfileDto>;
+
+
+export function roleNumberToString(role: Profile["role"]) {
+    switch (role) {
+        case 1:
+            return "User";
+        case 2:
+            return "Moderator";
+        case 3:
+            return "Admin";
+        default:
+            return "Unknown";
+    }
+}

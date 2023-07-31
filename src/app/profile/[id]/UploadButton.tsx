@@ -11,6 +11,9 @@ const UploadButton = ({onSuccess, isSaving}: UploadButtonProps) => {
             options={{
                 maxFileSize: 5000000,
                 croppingAspectRatio: 1,
+                singleUploadAutoClose: true,
+                showPoweredBy: false,
+                showUploadMoreButton: false,
             }}
             onUpload={(params: any) => {
                 if (params.event === "success") {
@@ -41,7 +44,9 @@ const UploadButton = ({onSuccess, isSaving}: UploadButtonProps) => {
                                 aria-hidden="true"
                             />
                         )}
-                        <span>{isSaving ? "Saving..." : "Upload an Image"}</span>
+                        <span>
+                            {isSaving ? "Saving..." : "Upload an Image"}
+                        </span>
                     </button>
                 );
             }}

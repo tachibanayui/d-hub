@@ -13,7 +13,6 @@ const ProfileEditor = ({
     const [isSending, setIsSending] = useState(false);
     const {
         register,
-        watch,
         handleSubmit,
         formState: { errors },
     } = useForm<EditProfileDTO>({
@@ -22,23 +21,28 @@ const ProfileEditor = ({
     });
 
     const onSubmit = async (data: EditProfileDTO) => {
-        setIsSending(true);
-        const res = await fetch(`/api/profile/${profileId}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-        const json = await res.json();
+        try {
+            setIsSending(true);
+            const res = await fetch(`/api/profile/${profileId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            const json = await res.json();
 
-        if (res.status >= 300) {
-            toast.error(json.message);
-        } else {
-            toast.success(json.message);
+            if (res.status >= 300) {
+                toast.error(json.message);
+            } else {
+                toast.success(json.message);
+            }
+
+            setIsSending(false);
+        } catch (e) {
+            toast.error("An error occurred while saving your profile.");
+            setIsSending(false);
         }
-
-        setIsSending(false);
     };
 
     return (
@@ -160,11 +164,13 @@ const ProfileEditor = ({
                     </div>
                     {/* Save changes button*/}
                     <button className="btn btn-primary" disabled={isSending}>
-                        {isSending && <span
-                            className="spinner-grow spinner-grow-sm me-2"
-                            aria-hidden="true"
-                        />}
-                        <span>{isSending ? 'Saving...' : 'Save profile'}</span>
+                        {isSending && (
+                            <span
+                                className="spinner-grow spinner-grow-sm me-2"
+                                aria-hidden="true"
+                            />
+                        )}
+                        <span>{isSending ? "Saving..." : "Save profile"}</span>
                     </button>
                 </form>
             </div>

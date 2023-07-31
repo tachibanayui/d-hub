@@ -67,3 +67,15 @@ export async function deleteTag(tagId: string) {
 
     return rs.acknowledged && rs.deletedCount === 1;
 }
+
+export async function findTagsById(tagIds: string[]) {
+    const tags = await (
+        await tagCollection
+    )
+        .find({
+            _id: { $in: tagIds.map((x) => new ObjectId(x)) },
+        })
+        .toArray();
+
+    return tags;
+}
