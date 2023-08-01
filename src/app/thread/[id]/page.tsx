@@ -17,6 +17,7 @@ import { idAsString } from "@/utils/mongoId";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/auth";
 import { getProfilesById, roleNumberToString } from "@/models/user";
+import { profile } from "console";
 
 const ViewThreadPage = async ({ params }: { params: { id: string } }) => {
     const session = await getServerSession(authOptions);
@@ -29,7 +30,8 @@ const ViewThreadPage = async ({ params }: { params: { id: string } }) => {
     const sessionUser = pfp?.length ? {
         ...pfp[0],
         name: session?.user.name!,
-        role: roleNumberToString(pfp[0].role)
+        role: roleNumberToString(pfp[0].role),
+        profileImg: session?.user.image!
     } : undefined;
 
     const id = params.id;

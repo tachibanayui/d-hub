@@ -48,6 +48,7 @@ const ThreadDetailView = ({
                         user={{
                             ...userMap.get(x.userId)!,
                             ...profileMap.get(x.userId)!,
+                            profileImg: userMap.get(x.userId)?.image,
                             role: roleNumberToString(
                                 profileMap.get(x.userId)?.role ?? 1
                             ),
@@ -77,6 +78,7 @@ export interface ThreadDetailViewProps {
     users: {
         id: string;
         name: string;
+        image: string;
     }[];
     sessionUser?: PostCardProps["user"];
 }
