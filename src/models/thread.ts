@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb";
+import { Document, ObjectId } from "mongodb";
 import client from "./dbconnect";
 import { findTagsById, tagCollection } from "./tag";
 import {
@@ -10,7 +10,7 @@ import {
     postDbZod,
     threadDbZod,
 } from "./thread.client";
-import {
+import userCollection, {
     getOrCreateProfile,
     getProfilesById,
     getUserById,
@@ -162,14 +162,21 @@ export async function getThreadDetailEx(threadId: string) {
 }
 
 export async function incrementView(threadId: string) {
-    (await threadCollection).updateOne({ _id: new ObjectId(threadId) }, {
-        $inc: {
-            view: 1
+    (await threadCollection).updateOne(
+        { _id: new ObjectId(threadId) },
+        {
+            $inc: {
+                view: 1,
+            },
         }
-    })
+    );
 }
 
-export async function likePost(postId: string, userId: string, activate: boolean) {
+export async function likePost(
+    postId: string,
+    userId: string,
+    activate: boolean
+) {
     const updateLike = {
         $addToSet: {
             likes: userId,
@@ -183,9 +190,14 @@ export async function likePost(postId: string, userId: string, activate: boolean
     };
 
     const update = activate ? updateLike : updateUnlike;
-    const res = await (await postCollection).updateOne({ _id: new ObjectId(postId) }, update);
+    const res = await (
+        await postCollection
+    ).updateOne({ _id: new ObjectId(postId) }, update);
     if (res.modifiedCount !== 1) {
-        return { success: false, message: "Something wrong when updating likes" };
+        return {
+            success: false,
+            message: "Something wrong when updating likes",
+        };
     }
 
     const rs = await findPostsById([postId]);
@@ -238,18 +250,69 @@ export async function dislikePost(
     return { success: true, message: `Updated`, dislikes: rs[0].dislikes };
 }
 
+export interface SearchThreadOptions {
+    title: string | undefined;
+    author: string | undefined;
+    tags: string[] | undefined;
+    before: number | undefined;
+    after: number | undefined;
+
+    pageIndex: number;
+    pageSize: number;
+}
 
 // TODO: Implement search
-export async function searchThreads() {
-    const rs = await(await threadCollection)
-        .find({})
-        .sort({
-            created: -1,
+export async function searchThreads(opt: SearchThreadOptions) {
+    const { title, author, tags, before, after, pageIndex, pageSize } = opt;
+    console.log(opt);
+    
+    const query = {
+        title: { $regex: title || '', $options: "i" },
+        
+    } as Document;
+
+    if (author) {
+        const userIds = await(
+            await(await userCollection)
+                .find({
+                    name: { $regex: author , $options: "i" },
+                })
+                .project({ _id: 1 })
+                .toArray()
+        ).map((x) => x._id.toString());
+
+        query.userId = { $in: userIds };
+    }
+
+    if (tags?.length) {
+        query.tagIds = { $elemMatch: { $in: tags || [] } };
+    }
+
+    if (after) {
+        query.created = { $gt: new Date(after) };
+    }
+
+    if (before) {
+        query.created = { ...query.created, $lt: new Date(before) };
+    }
+
+    const rs = await (
+        await threadCollection
+    )
+        .find(query, {
+            skip: pageIndex * pageSize,
+            limit: pageSize,
+            sort: {
+                created: -1,
+            },
         })
         .toArray();
+
+    const rsCount = await (await threadCollection).countDocuments(query);
+
     return {
-        success: true, 
-        count: rs.length,
-        data: rs.map(x => idAsString(x))
-    }
+        success: true,
+        count: rsCount,
+        data: rs.map((x) => idAsString(x)),
+    };
 }

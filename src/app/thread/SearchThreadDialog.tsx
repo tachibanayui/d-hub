@@ -10,19 +10,37 @@ import {
     AiFillMessage,
     AiOutlineCalendar,
     AiOutlinePlus,
+    AiOutlineSearch,
 } from "react-icons/ai";
 import TagSelector from "../../components/TagSelector";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const SearchThreadDialog = ({ tagStore }: SearchThreadDialogProps) => {
-    const { register, handleSubmit, watch, formState, setValue } =
+const SearchThreadDialog = ({ tagStore, initialFormData }: SearchThreadDialogProps) => {
+    const router = useRouter();
+
+    const { register, handleSubmit, watch, formState, setValue, reset } =
         useForm<SearchThreadDTO>({
             resolver: zodResolver(searchThreadDto),
             defaultValues: {
                 tagIds: [],
+                ...initialFormData,
             },
         });
     const { errors } = formState;
+
+    const handleSearch = (data: SearchThreadDTO) => {
+        const { tagIds, title, after, author, before } = data;
+        console.log(data);
+        const afterNum = after ? +new Date(after) : '';
+        const beforeNum = before ? +new Date(before) : '';
+
+        const url = `/thread?title=${title}&author=${author}&after=${afterNum}&before=${beforeNum}&tagIds=${tagIds.join(
+            ","
+        )}`;
+
+        router.push(url);
+    };
 
     return (
         <section className="card">
@@ -34,7 +52,7 @@ const SearchThreadDialog = ({ tagStore }: SearchThreadDialogProps) => {
                 </Link>
             </div>
             <div className="card-body">
-                <form>
+                <form onSubmit={handleSubmit(handleSearch)}>
                     {/* Title input */}
                     <div className="form-outline mb-4">
                         <label htmlFor="inputTitle" className="form-label">
@@ -120,17 +138,21 @@ const SearchThreadDialog = ({ tagStore }: SearchThreadDialogProps) => {
                                 type="date"
                                 className={classNames(
                                     "form-control",
-                                    { "invalid-input": errors.title },
+                                    { "invalid-input": errors.after },
                                     {
                                         "valid-input":
                                             formState.isSubmitted &&
-                                            !errors.title,
+                                            !errors.after,
                                     }
                                 )}
                                 id="inputAfter"
                                 {...register("after")}
                             />
-                            <button type="button" className="btn btn-primary">
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={() => setValue("after", undefined)}
+                            >
                                 Clear
                             </button>
                         </div>
@@ -162,7 +184,11 @@ const SearchThreadDialog = ({ tagStore }: SearchThreadDialogProps) => {
                                 id="inputBefore"
                                 {...register("before")}
                             />
-                            <button type="button" className="btn btn-primary">
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={() => setValue("before", undefined)}
+                            >
                                 Clear
                             </button>
                         </div>
@@ -174,9 +200,13 @@ const SearchThreadDialog = ({ tagStore }: SearchThreadDialogProps) => {
                     <hr />
                     <div className="d-flex gap-2">
                         <button className="btn btn-primary">
+                            <AiOutlineSearch />
                             Search threads
                         </button>
-                        <button className="btn btn-outline-danger">
+                        <button
+                            className="btn btn-outline-danger"
+                            onClick={() => reset()}
+                        >
                             Clear
                         </button>
                     </div>
@@ -190,4 +220,5 @@ export default SearchThreadDialog;
 
 export interface SearchThreadDialogProps {
     tagStore: Tag[];
+    initialFormData?: SearchThreadDTO;
 }

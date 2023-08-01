@@ -257,6 +257,8 @@ const NewThreadWizard = ({ tags, userProfile }: NewThreadWizardProps) => {
                     />
                     <div className="my-3"></div>
                     <PostCard
+                        showActions
+                        isEdit={false}
                         user={{
                             name: username,
                             profileImg: userProfile.profileImg,

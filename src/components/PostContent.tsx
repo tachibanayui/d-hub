@@ -17,13 +17,13 @@ const PostContent = ({
 
     if (mode === "edit") {
         return (
-            <ReactQuill />
+            <ReactQuill value={content} onChange={(e) => setContent(e)} />
         )
     } else {
         return (
             <div
                 dangerouslySetInnerHTML={{
-                    __html: sanitizeHtml(content),
+                    __html: sanitizeHtml(initialPostContent),
                 }}
             />
         );
