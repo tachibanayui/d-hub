@@ -41,3 +41,10 @@ export const createThreadDto = retain(threadZod, [
     "tagIds",
 ]).extend(retain(postZod, ["content"]).shape);
 export type CreateThreadDTO = z.infer<typeof createThreadDto>;
+
+export const searchThreadDto = retain(threadZod, ["title", "tagIds"]).extend({
+    after: z.date().optional(),
+    before: z.date().optional(),
+    author: z.string().optional(),
+});
+export type SearchThreadDTO = z.infer<typeof searchThreadDto>;

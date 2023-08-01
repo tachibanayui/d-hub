@@ -88,8 +88,7 @@ const TagSelector = ({
                         <div className="text-muted">
                             No tags selected.{" "}
                             <i>
-                                Select a tag from the dropdown above to add it
-                                to the thread.
+                                Select a tag from the dropdown above
                             </i>
                         </div>
                     )}

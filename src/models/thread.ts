@@ -237,3 +237,19 @@ export async function dislikePost(
 
     return { success: true, message: `Updated`, dislikes: rs[0].dislikes };
 }
+
+
+// TODO: Implement search
+export async function searchThreads() {
+    const rs = await(await threadCollection)
+        .find({})
+        .sort({
+            created: -1,
+        })
+        .toArray();
+    return {
+        success: true, 
+        count: rs.length,
+        data: rs.map(x => idAsString(x))
+    }
+}
