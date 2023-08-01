@@ -68,17 +68,12 @@ const ThreadHero = ({ data, tagStore, authorName }: ThreadHeroProps) => {
                         <ul className="dropdown-menu">
                             <li>
                                 <a className="dropdown-item" href="#">
-                                    Action
+                                    Edit
                                 </a>
                             </li>
                             <li>
                                 <a className="dropdown-item" href="#">
-                                    Another action
-                                </a>
-                            </li>
-                            <li>
-                                <a className="dropdown-item" href="#">
-                                    Something else here
+                                    Delete
                                 </a>
                             </li>
                         </ul>

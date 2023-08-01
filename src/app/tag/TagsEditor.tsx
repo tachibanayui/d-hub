@@ -4,9 +4,12 @@ import { EditTagDTO, Tag } from "@/models/tags.client";
 import { useEffect, useState } from "react";
 import TagListItem from "./TagListItem";
 import { MdRefresh } from "react-icons/md";
-import useBsScript from "@/hooks/useBsScript";
+import { useSession } from "@/reexports/nextAuthReact";
 
 const TagsEditor = ({ initialTags }: TagsEditorProps) => {
+    const session = useSession();
+    const role = session.data?.user?.role ?? 1;
+
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [tags, setTags] = useState<Tag[]>(initialTags);
 
@@ -48,7 +51,7 @@ const TagsEditor = ({ initialTags }: TagsEditorProps) => {
                         <button
                             className="btn btn-primary"
                             disabled={isRefreshing}
-                            style={{ flex: '0 0 auto' }}
+                            style={{ flex: "0 0 auto" }}
                             onClick={handleRefresh}
                         >
                             {isRefreshing ? (
@@ -75,18 +78,21 @@ const TagsEditor = ({ initialTags }: TagsEditorProps) => {
                                 <th scope="col" style={{ minWidth: 300 }}>
                                     Created
                                 </th>
-                                <th
-                                    scope="col"
-                                    style={{ minWidth: 275 }}
-                                    colSpan={2}
-                                >
-                                    Action
-                                </th>
+                                {role >= 2 && (
+                                    <th
+                                        scope="col"
+                                        style={{ minWidth: 275 }}
+                                        colSpan={2}
+                                    >
+                                        Action
+                                    </th>
+                                )}
                             </tr>
                         </thead>
                         <tbody className="table-group-divider">
                             {tags.map((x) => (
                                 <TagListItem
+                                    showAction={role >= 2}
                                     key={x.id}
                                     data={x}
                                     onDeleted={() =>
@@ -114,7 +120,7 @@ const TagsEditor = ({ initialTags }: TagsEditorProps) => {
                 {tags.length === 0 && <p>No tags found!</p>}
             </div>
             <div className="col col-sx-12 col-md-4">
-                <NewTag onTagCreated={handleTagCreated} />
+                <NewTag onTagCreated={handleTagCreated} isAllowed={role >= 2} />
             </div>
         </div>
     );

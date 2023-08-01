@@ -1,5 +1,5 @@
 import client from "@/models/dbconnect";
-import { login } from "@/models/user";
+import { getProfilesById, login } from "@/models/user";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -10,7 +10,7 @@ export const authOptions: NextAuthOptions = {
         databaseName: "dhub",
     }) as any,
     session: {
-        strategy: 'jwt'
+        strategy: "jwt",
     },
     providers: [
         GoogleProvider({
@@ -38,25 +38,32 @@ export const authOptions: NextAuthOptions = {
                     return null;
                 }
 
+                const pfps = await getProfilesById([user._id.toString()]);
+
                 return {
                     id: user._id.toString(),
                     email: user.email,
                     image: user.image,
                     name: user.name,
+                    role: pfps[0]?.role ?? 1,
                 };
             },
         }),
     ],
     callbacks: {
-        jwt: (params) => {
+        jwt: async (params) => {
             const { token, account, profile, user } = params;
+            const userId = user?.id;
+            const pfps = userId ? await getProfilesById([userId]) : undefined;
+
             if (account) {
                 token.userId = user.id;
+                token.role = pfps?.[0].role ?? 1;
                 return token;
             }
 
             return token;
-        },  
+        },
         session: (params) => {
             const { session, token } = params;
             return {
@@ -64,6 +71,7 @@ export const authOptions: NextAuthOptions = {
                 user: {
                     ...session.user,
                     id: token.userId,
+                    role: token.role || 1,
                 },
             };
         },

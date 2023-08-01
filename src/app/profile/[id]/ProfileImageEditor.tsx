@@ -3,8 +3,13 @@ import UploadButton from "./UploadButton";
 import { useState } from "react";
 import ProfileImage from "@/components/ProfileImage";
 import { toast } from "react-toastify";
+import { useSession } from "@/reexports/nextAuthReact";
 
 const ProfileImageEditor = ({ profileId, img }: ProfileImageEditorProps) => {
+    const session = useSession();
+    const role = session.data?.user?.role ?? 1;
+    const isEditAllowed = role >= 2 || session.data?.user?.id === profileId;
+
     const [isSaving, setIsSaving] = useState(false);
     const [url, setUrl] = useState<string | undefined>(img);
 
@@ -29,7 +34,6 @@ const ProfileImageEditor = ({ profileId, img }: ProfileImageEditorProps) => {
         setIsSaving(false);
     };
 
-
     return (
         <div className="card mb-4 mb-xl-0">
             <div className="card-header">Profile Picture</div>
@@ -40,10 +44,18 @@ const ProfileImageEditor = ({ profileId, img }: ProfileImageEditorProps) => {
                     width={300}
                     height={300}
                 />
-                <div className="small font-italic text-muted mb-4">
-                    JPG or PNG no larger than 5 MB
-                </div>
-                <UploadButton onSuccess={(e) => handleChange(e)} isSaving={isSaving} />
+
+                {isEditAllowed && (
+                    <>
+                        <div className="small font-italic text-muted mb-4">
+                            JPG or PNG no larger than 5 MB
+                        </div>
+                        <UploadButton
+                            onSuccess={(e) => handleChange(e)}
+                            isSaving={isSaving}
+                        />
+                    </>
+                )}
             </div>
         </div>
     );

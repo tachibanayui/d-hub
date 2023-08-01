@@ -4,12 +4,17 @@ import { EditProfileDTO, editProfileDto } from "@/models/user.client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { ToastContainer, toast } from "@/reexports/reactToasify";
+import { useSession } from "@/reexports/nextAuthReact";
 
 const ProfileEditor = ({
     profileId,
     profileData,
     email,
 }: ProfileEditorProps) => {
+    const session = useSession();
+    const role = session.data?.user?.role ?? 1;
+    const isEditAllowed = role >= 2 || session.data?.user?.id === profileId;
+
     const [isSending, setIsSending] = useState(false);
     const {
         register,
@@ -52,14 +57,15 @@ const ProfileEditor = ({
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-3">
                         <label className="small mb-1" htmlFor="inputUsername">
-                            Full name (how your name will appear to other users
-                            on the site)
+                            Full name (how it will appear to other users on the
+                            site)
                         </label>
                         <input
                             className="form-control"
                             id="inputUsername"
                             type="text"
                             placeholder="Enter your username"
+                            disabled={!isEditAllowed}
                             {...register("username")}
                         />
                         {errors.username && (
@@ -77,6 +83,7 @@ const ProfileEditor = ({
                             <input
                                 className="form-control"
                                 id="inputMotto"
+                                disabled={!isEditAllowed}
                                 type="text"
                                 placeholder="Enter your motto"
                                 {...register("motto")}
@@ -92,6 +99,7 @@ const ProfileEditor = ({
                             <input
                                 className="form-control"
                                 id="inputLocation"
+                                disabled={!isEditAllowed}
                                 type="text"
                                 placeholder="Enter your location"
                                 {...register("location")}
@@ -133,6 +141,7 @@ const ProfileEditor = ({
                                 type="tel"
                                 placeholder="Enter your phone number"
                                 {...register("phone")}
+                                disabled={!isEditAllowed}
                             />
                         </div>
                         {errors.phone && (
@@ -154,6 +163,7 @@ const ProfileEditor = ({
                                 type="date"
                                 placeholder="Enter your date of birth"
                                 {...register("dob")}
+                                disabled={!isEditAllowed}
                             />
                             {errors.dob && (
                                 <p className="text-danger">
@@ -163,15 +173,22 @@ const ProfileEditor = ({
                         </div>
                     </div>
                     {/* Save changes button*/}
-                    <button className="btn btn-primary" disabled={isSending}>
-                        {isSending && (
-                            <span
-                                className="spinner-grow spinner-grow-sm me-2"
-                                aria-hidden="true"
-                            />
-                        )}
-                        <span>{isSending ? "Saving..." : "Save profile"}</span>
-                    </button>
+                    {isEditAllowed && (
+                        <button
+                            className="btn btn-primary"
+                            disabled={isSending}
+                        >
+                            {isSending && (
+                                <span
+                                    className="spinner-grow spinner-grow-sm me-2"
+                                    aria-hidden="true"
+                                />
+                            )}
+                            <span>
+                                {isSending ? "Saving..." : "Save profile"}
+                            </span>
+                        </button>
+                    )}
                 </form>
             </div>
         </div>

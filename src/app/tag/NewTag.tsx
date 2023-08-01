@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/reexports/reactToasify";
 import { useState } from "react";
 
-const NewTag = ({ onTagCreated }: NewTagProps) => {
+const NewTag = ({ onTagCreated, isAllowed }: NewTagProps) => {
     const [isSaving, setIsSaving] = useState(false);
 
     const {
@@ -81,7 +81,7 @@ const NewTag = ({ onTagCreated }: NewTagProps) => {
                         </div>
 
                         <hr />
-                        <button className="btn btn-primary" disabled={isSaving}>
+                        <button className="btn btn-primary" disabled={isSaving || !isAllowed}>
                             {isSaving ? (
                                 <span
                                     className="spinner-grow spinner-grow-sm me-2"
@@ -92,6 +92,7 @@ const NewTag = ({ onTagCreated }: NewTagProps) => {
                             )}{" "}
                             Add
                         </button>
+                        {isAllowed || (<p className="text-danger">You are not allowed to create new tags</p>)}
                     </div>
                 </form>
             </div>
@@ -103,4 +104,5 @@ export default NewTag;
 
 interface NewTagProps {
     onTagCreated?(data: EditTagDTO, id: string): void;
+    isAllowed: boolean;
 }
