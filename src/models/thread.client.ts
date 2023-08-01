@@ -6,8 +6,8 @@ export const postZod = z.object({
     userId: z.string(),
     threadId: z.string(),
     content: z.string().min(1).max(10000),
-    likes: z.number().default(0),
-    dislikes: z.number().default(0),
+    likes: z.array(z.string()).default([]),
+    dislikes: z.array(z.string()).default([]),
     created: z.date().default(new Date()),
 });
 export type Post = z.infer<typeof postZod>;

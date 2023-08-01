@@ -2,9 +2,10 @@ import { getTags } from "@/models/tag";
 import NewThreadWizard from "./NewThreadWizard";
 import { getSession } from "@/reexports/nextAuthReact";
 import { getServerSession } from "next-auth/next";
-import { Profile, getProfile } from "@/models/user";
+import { ProfileDB, getOrCreateProfile } from "@/models/user";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/utils/auth";
+import { idAsString } from "@/utils/mongoId";
 
 const NewThreadPage = async () => {
     const tags = await getTags();
@@ -13,15 +14,13 @@ const NewThreadPage = async () => {
         return redirect("/login");
     }
 
-    const pfp = await getProfile(session?.user.id);
+    const pfp = await getOrCreateProfile(session?.user.id);
     if (!pfp) {
         return redirect("/login");
     }
 
-    (pfp as any).id = pfp._id.toString();
-    delete (pfp as any)._id;
-
-    return <NewThreadWizard tags={tags} userProfile={pfp as Profile} />;
+    const pfp2 = idAsString(pfp);
+    return <NewThreadWizard tags={tags} userProfile={pfp2} />;
 };
 
 export default NewThreadPage;

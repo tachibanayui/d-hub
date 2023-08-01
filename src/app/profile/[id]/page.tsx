@@ -1,10 +1,10 @@
-import { getProfile, getUserById } from "@/models/user";
+import { getOrCreateProfile, getUserById } from "@/models/user";
 import ProfileEditor from "./ProfileEditor";
 import ProfileImageEditor from "./ProfileImageEditor";
 import { notFound } from "next/navigation";
 
 const ProfilePage = async ({ params }: ProfilePageProps) => {
-    const pfp = await getProfile(params.id);
+    const pfp = await getOrCreateProfile(params.id);
     if (!pfp) {
         return notFound();
     }

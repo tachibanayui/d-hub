@@ -1,4 +1,4 @@
-import { retain } from "@/utils/zodObject";
+import { omit, retain } from "@/utils/zodObject";
 import z from "zod";
 
 export const usernameZod = z
@@ -23,6 +23,7 @@ export const loginDto = retain(registerDto.innerType(), ["email", "password"]);
 export type LoginDTO = z.infer<typeof loginDto>;
 
 export const profileZod = z.object({
+    id: z.string(),
     motto: z.string().optional(),
     location: z.string().max(256, "Location too long!").optional(),
     phone: z.string().max(64, "Phone number too long!").optional(),
@@ -30,10 +31,12 @@ export const profileZod = z.object({
     profileImg: z.string().optional(),
     role: z.union([z.literal(1), z.literal(2), z.literal(3)]).default(1),
 });
-
 export type Profile = z.infer<typeof profileZod>;
 
-export const editProfileDto = retain(profileZod, [
+export const profileDbZod = omit(profileZod, ["id"]);
+export type ProfileDB = z.infer<typeof profileDbZod>;
+
+export const editProfileDto = retain(profileDbZod, [
     "motto",
     "location",
     "phone",
@@ -41,11 +44,10 @@ export const editProfileDto = retain(profileZod, [
     username: usernameZod,
     dob: z.string().optional(),
 });
-
 export type EditProfileDTO = z.infer<typeof editProfileDto>;
 
 
-export function roleNumberToString(role: Profile["role"]) {
+export function roleNumberToString(role: ProfileDB["role"]) {
     switch (role) {
         case 1:
             return "User";

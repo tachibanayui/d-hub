@@ -1,22 +1,28 @@
 import { ObjectId } from "mongodb";
 import client from "./dbconnect";
-import { EditProfileDTO, RegisterDTO, profileZod } from "./user.client";
-import bcrypt from 'bcrypt';
+import { EditProfileDTO, ProfileDB, RegisterDTO, profileDbZod } from "./user.client";
+import bcrypt from "bcrypt";
 
 export * from "./user.client";
 const userCollection = client.then((x) => x.db("dhub").collection("users"));
-const profileCollection = client.then((x) => x.db("dhub").collection("profiles"))
+const profileCollection = client.then((x) =>
+    x.db("dhub").collection<ProfileDB>("profiles")
+);
 
 export async function findUserByEmail(email: string) {
-    const rs = await (await userCollection).findOne({
-        email
+    const rs = await (
+        await userCollection
+    ).findOne({
+        email,
     });
 
     return rs;
 }
 
 export async function saveNewUser(registerDto: RegisterDTO) {
-    const newUser = await(await userCollection).insertOne({
+    const newUser = await (
+        await userCollection
+    ).insertOne({
         name: registerDto.name,
         email: registerDto.email,
         password: await bcrypt.hash(registerDto.password, 10),
@@ -27,17 +33,19 @@ export async function saveNewUser(registerDto: RegisterDTO) {
 
 export async function login(email: string, password: string) {
     const user = await findUserByEmail(email);
-    if (user && await bcrypt.compare(password, user.password)) {
+    if (user && (await bcrypt.compare(password, user.password))) {
         return user;
     }
 
     return null;
 }
 
-export async function getUserById(userId: string) { 
+export async function getUserById(userId: string) {
     const _id = new ObjectId(userId);
-    const res = await (await userCollection).findOne({
-        _id
+    const res = await (
+        await userCollection
+    ).findOne({
+        _id,
     });
 
     if (res) {
@@ -45,16 +53,42 @@ export async function getUserById(userId: string) {
     }
 
     return null;
-} 
+}
 
-export async function getProfile(userId: string) {
+export async function getUsersById(ids: string[]) {
+    const users = await (
+        await userCollection
+    )
+        .find({
+            _id: { $in: ids.map((x) => new ObjectId(x)) },
+        })
+        .toArray();
+
+    return users;
+}
+
+export async function getProfilesById(ids: string[]) {
+    const profiles = await (
+        await profileCollection
+    )
+        .find({
+            _id: { $in: ids.map((x) => new ObjectId(x)) },
+        })
+        .toArray();
+
+    return profiles;
+}
+
+export async function getOrCreateProfile(userId: string) {
     const user = await getUserById(userId);
     if (!user) {
         return null;
     }
 
-    const pfp = await (await profileCollection).findOne({
-        _id: new ObjectId(userId)
+    const pfp = await (
+        await profileCollection
+    ).findOne({
+        _id: new ObjectId(userId),
     });
 
     if (pfp) {
@@ -63,9 +97,9 @@ export async function getProfile(userId: string) {
 
     const newPfp = {
         _id: new ObjectId(userId),
-        ...profileZod.parse({}),
+        ...profileDbZod.parse({}),
     };
-    
+
     const res = await (await profileCollection).insertOne(newPfp);
     if (res) {
         return newPfp;
@@ -82,12 +116,19 @@ export async function applyEditProfile(userId: string, data: EditProfileDTO) {
         editData.dob = new Date(data.dob);
     }
 
-
-    const res = await (await profileCollection).updateOne({
-        _id: new ObjectId(userId),
-    }, {
-        "$set": data
-    })
+    const res = await (
+        await profileCollection
+    ).updateOne(
+        {
+            _id: new ObjectId(userId),
+        },
+        {
+            $set: {
+                ...data, 
+                dob: data.dob ? new Date(data.dob) : undefined
+            }
+        }
+    );
 
     if (!res.acknowledged || res.matchedCount !== 1) {
         return false;
@@ -96,15 +137,17 @@ export async function applyEditProfile(userId: string, data: EditProfileDTO) {
     return true;
 }
 
-export async function applyEditPfpImg(userId: string, url: string) { 
-    const res = await(await userCollection).updateOne(
+export async function applyEditPfpImg(userId: string, url: string) {
+    const res = await (
+        await userCollection
+    ).updateOne(
         {
             _id: new ObjectId(userId),
         },
         {
             $set: {
-                image: url
-            }
+                image: url,
+            },
         }
     );
 

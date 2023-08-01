@@ -10,6 +10,13 @@ import {
     postDbZod,
     threadDbZod,
 } from "./thread.client";
+import {
+    getOrCreateProfile,
+    getProfilesById,
+    getUserById,
+    getUsersById,
+} from "./user";
+import { idAsString } from "@/utils/mongoId";
 
 export * from "./thread.client";
 
@@ -21,7 +28,7 @@ export const postCollection = client.then((x) =>
 );
 
 export async function findThreadsById(ids: string[]) {
-    const tags = await (
+    const threads = await (
         await threadCollection
     )
         .find({
@@ -29,7 +36,7 @@ export async function findThreadsById(ids: string[]) {
         })
         .toArray();
 
-    return tags;
+    return threads;
 }
 
 export async function createPost(
@@ -55,8 +62,8 @@ export async function createPost(
     return {
         success: true,
         message: "Create post successful!",
-        id: rs.insertedId.toString()
-    }
+        id: rs.insertedId.toString(),
+    };
 }
 
 export async function createThread(data: CreateThreadDTO, userId: string) {
@@ -94,6 +101,139 @@ export async function createThread(data: CreateThreadDTO, userId: string) {
         success: true,
         message: "Thread created successfully!",
         threadId: rs.insertedId.toString(),
-        postId: rsPost.id!
+        postId: rsPost.id!,
+    };
+}
+
+export async function findPostsById(ids: string[]) {
+    const posts = await (
+        await postCollection
+    )
+        .find({
+            _id: { $in: ids.map((x) => new ObjectId(x)) },
+        })
+        .toArray();
+
+    return posts;
+}
+
+export async function findPostsInThread(threadId: string) {
+    const posts = await (
+        await postCollection
+    )
+        .find({
+            threadId: threadId,
+        })
+        .sort({
+            created: 1,
+        })
+        .toArray();
+
+    return posts;
+}
+
+export async function getCombinedsById(ids: string[]) {}
+
+export async function getThreadDetailEx(threadId: string) {
+    const threads = await findThreadsById([threadId]);
+
+    if (threads.length !== 1) {
+        return {
+            success: false,
+            message: `Cannot find thread with id: ${threadId}`,
+        };
     }
+
+    const posts = await findPostsInThread(threadId);
+    const participatingUsers = Array.from(
+        new Set(posts.map((x) => x.userId)).values()
+    );
+    const usersData = await getUsersById(participatingUsers);
+    const profiles = await getProfilesById(participatingUsers);
+
+    return {
+        success: true,
+        message: "Detail received!",
+        threadData: idAsString(threads[0]),
+        posts: posts.map((x) => idAsString(x)),
+        users: usersData.map((x) => idAsString(x)),
+        profles: profiles.map((x) => idAsString(x)),
+    };
+}
+
+export async function incrementView(threadId: string) {
+    (await threadCollection).updateOne({ _id: new ObjectId(threadId) }, {
+        $inc: {
+            view: 1
+        }
+    })
+}
+
+export async function likePost(postId: string, userId: string, activate: boolean) {
+    const updateLike = {
+        $addToSet: {
+            likes: userId,
+        },
+    };
+
+    const updateUnlike = {
+        $pull: {
+            likes: userId,
+        },
+    };
+
+    const update = activate ? updateLike : updateUnlike;
+    const res = await (await postCollection).updateOne({ _id: new ObjectId(postId) }, update);
+    if (res.modifiedCount !== 1) {
+        return { success: false, message: "Something wrong when updating likes" };
+    }
+
+    const rs = await findPostsById([postId]);
+    if (rs.length === 0) {
+        return {
+            success: false,
+            message: `Cannot find id: ${postId}!`,
+        };
+    }
+
+    return { success: true, message: `Updated`, likes: rs[0].likes };
+}
+
+export async function dislikePost(
+    postId: string,
+    userId: string,
+    activate: boolean
+) {
+    const updateLike = {
+        $addToSet: {
+            dislikes: userId,
+        },
+    };
+
+    const updateUnlike = {
+        $pull: {
+            dislikes: userId,
+        },
+    };
+
+    const update = activate ? updateLike : updateUnlike;
+    const res = await (
+        await postCollection
+    ).updateOne({ _id: new ObjectId(postId) }, update);
+    if (res.modifiedCount !== 1) {
+        return {
+            success: false,
+            message: "Something wrong when updating likes",
+        };
+    }
+
+    const rs = await findPostsById([postId]);
+    if (rs.length === 0) {
+        return {
+            success: false,
+            message: `Cannot find id: ${postId}!`,
+        };
+    }
+
+    return { success: true, message: `Updated`, dislikes: rs[0].dislikes };
 }

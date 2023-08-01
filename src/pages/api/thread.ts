@@ -4,13 +4,13 @@ import { createThreadDto } from "@/models/thread.client";
 import {
     applyEditProfile,
     findUserByEmail,
-    getProfile,
+    getOrCreateProfile,
     saveNewUser,
 } from "@/models/user";
 import { editProfileDto, registerDto } from "@/models/user.client";
 import { authOptions } from "@/utils/auth";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth";   
 
 export default async function handler(
     req: NextApiRequest,

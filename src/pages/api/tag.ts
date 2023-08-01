@@ -2,7 +2,7 @@ import { createTag, editTagDto, getTags } from "@/models/tag";
 import {
     applyEditProfile,
     findUserByEmail,
-    getProfile,
+    getOrCreateProfile,
     saveNewUser,
 } from "@/models/user";
 import { editProfileDto, registerDto } from "@/models/user.client";

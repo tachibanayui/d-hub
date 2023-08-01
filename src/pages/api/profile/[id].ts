@@ -1,5 +1,6 @@
-import { applyEditProfile, findUserByEmail, getProfile, saveNewUser } from "@/models/user";
+import { applyEditProfile, findUserByEmail, getOrCreateProfile, saveNewUser } from "@/models/user";
 import { editProfileDto, registerDto } from "@/models/user.client";
+import { idAsString } from "@/utils/mongoId";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -40,16 +41,13 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
         return;
     }
 
-    const pfp = await getProfile(id);
+    const pfp = await getOrCreateProfile(id);
     if (!pfp) {
         res.status(500).json({ message: "Internal server error" });
         return;
     }
 
-    const pfp2 = pfp as any;
-    pfp2.id = pfp._id;
-    delete pfp2._id;
-
+    const pfp2 = idAsString(pfp);
     res.status(200).json({
         profile: pfp2,
     });

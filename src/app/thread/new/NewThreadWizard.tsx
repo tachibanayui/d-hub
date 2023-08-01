@@ -12,17 +12,18 @@ import {
 import { BsCardImage } from "react-icons/bs";
 import { CreateThreadDTO, createThreadDto } from "@/models/thread.client";
 import ThreadHero from "@/components/ThreadHero";
-import PostContent from "@/components/PostContent";
+import PostCard from "@/components/PostCard";
 
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-
 import "react-quill/dist/quill.snow.css";
+
+
 import { CldUploadWidget } from "next-cloudinary";
 import { Tag } from "@/models/tags.client";
 import TagSelector from "@/components/TagSelector";
 import { useSession } from "@/reexports/nextAuthReact";
-import { Profile, roleNumberToString } from "@/models/user.client";
+import { ProfileDB, roleNumberToString } from "@/models/user.client";
 import { toast } from "@/reexports/reactToasify";
 import { useState } from "react";
 
@@ -255,9 +256,9 @@ const NewThreadWizard = ({ tags, userProfile }: NewThreadWizardProps) => {
                         authorName={username}
                     />
                     <div className="my-3"></div>
-                    <PostContent
+                    <PostCard
                         user={{
-                            username: username,
+                            name: username,
                             profileImg: userProfile.profileImg,
                             role: roleNumberToString(userProfile.role),
                             motto: userProfile.motto,
@@ -268,8 +269,8 @@ const NewThreadWizard = ({ tags, userProfile }: NewThreadWizardProps) => {
                             content: watch("content"),
                             threadId: "0",
                             userId: "0",
-                            dislikes: 0,
-                            likes: 0,
+                            dislikes: [],
+                            likes: [],
                         }}
                     />
                 </div>
@@ -282,5 +283,5 @@ export default NewThreadWizard;
 
 export interface NewThreadWizardProps {
     tags: Tag[];
-    userProfile: Profile;
+    userProfile: ProfileDB;
 }
