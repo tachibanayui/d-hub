@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import sanitizeHtml from "sanitize-html";
+import { sanitize } from "isomorphic-dompurify";
 
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -23,12 +24,7 @@ const PostContent = ({
         return (
             <div
                 dangerouslySetInnerHTML={{
-                    __html: sanitizeHtml(initialPostContent, {
-                        allowedTags: ["img"],
-                        allowedAttributes: {
-                            img: ["src", "align"],
-                        },
-                    }),
+                    __html: sanitize(initialPostContent),
                 }}
             />
         );
