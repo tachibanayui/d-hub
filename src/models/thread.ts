@@ -251,20 +251,18 @@ export async function dislikePost(
 }
 
 export interface SearchThreadOptions {
-    title: string | undefined;
-    author: string | undefined;
-    tags: string[] | undefined;
-    before: number | undefined;
-    after: number | undefined;
+    title?: string;
+    author?: string;
+    tags?: string[];
+    before?: number;
+    after?: number;
 
     pageIndex: number;
     pageSize: number;
 }
 
-// TODO: Implement search
 export async function searchThreads(opt: SearchThreadOptions) {
     const { title, author, tags, before, after, pageIndex, pageSize } = opt;
-    console.log(opt);
     
     const query = {
         title: { $regex: title || '', $options: "i" },
@@ -300,7 +298,7 @@ export async function searchThreads(opt: SearchThreadOptions) {
         await threadCollection
     )
         .find(query, {
-            skip: pageIndex * pageSize,
+            skip: Math.max(0, pageIndex - 1) * pageSize,
             limit: pageSize,
             sort: {
                 created: -1,
@@ -315,4 +313,11 @@ export async function searchThreads(opt: SearchThreadOptions) {
         count: rsCount,
         data: rs.map((x) => idAsString(x)),
     };
+}
+
+export async function getHotThreads() {
+    return await searchThreads({
+        pageIndex: 1,
+        pageSize: 5       
+    })
 }

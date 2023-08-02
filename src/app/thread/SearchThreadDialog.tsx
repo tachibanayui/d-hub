@@ -16,7 +16,10 @@ import TagSelector from "../../components/TagSelector";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const SearchThreadDialog = ({ tagStore, initialFormData }: SearchThreadDialogProps) => {
+const SearchThreadDialog = ({
+    tagStore,
+    initialFormData,
+}: SearchThreadDialogProps) => {
     const router = useRouter();
 
     const { register, handleSubmit, watch, formState, setValue, reset } =
@@ -32,8 +35,8 @@ const SearchThreadDialog = ({ tagStore, initialFormData }: SearchThreadDialogPro
     const handleSearch = (data: SearchThreadDTO) => {
         const { tagIds, title, after, author, before } = data;
         console.log(data);
-        const afterNum = after ? +new Date(after) : '';
-        const beforeNum = before ? +new Date(before) : '';
+        const afterNum = after ? +new Date(after) : "";
+        const beforeNum = before ? +new Date(before) : "";
 
         const url = `/thread?title=${title}&author=${author}&after=${afterNum}&before=${beforeNum}&tagIds=${tagIds.join(
             ","
@@ -74,6 +77,7 @@ const SearchThreadDialog = ({ tagStore, initialFormData }: SearchThreadDialogPro
                                     }
                                 )}
                                 id="inputTitle"
+                                placeholder="Search by thread title"
                                 {...register("title")}
                             />
                         </div>
@@ -103,6 +107,7 @@ const SearchThreadDialog = ({ tagStore, initialFormData }: SearchThreadDialogPro
                                     }
                                 )}
                                 id="inputAuthor"
+                                placeholder="Search by author name"
                                 {...register("author")}
                             />
                         </div>

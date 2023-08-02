@@ -1,7 +1,8 @@
 import ThreadListItem from "@/components/ThreadListItem";
 import { Tag } from "@/models/tags.client";
 import { Thread } from "@/models/thread.client";
-const HotThreadCarosel = ({ hotThreads, tagStore }: HotThreadCaroselProps) => {
+import classNames from "classnames";
+const HotThreadCarosel = ({ hotThreads, tagStore, userStore }: HotThreadCaroselProps) => {
     return (
         <div
             id="carouselExample"
@@ -11,41 +12,27 @@ const HotThreadCarosel = ({ hotThreads, tagStore }: HotThreadCaroselProps) => {
         >
             <div className="carousel-inner">
                 <div className="carousel-indicators">
-                    <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="0"
-                        className="active"
-                        aria-current="true"
-                        aria-label="Slide 1"
-                    />
-                    <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="1"
-                        aria-label="Slide 2"
-                    />
-                    <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="2"
-                        aria-label="Slide 3"
-                    />
+                    {hotThreads.map((x, i) => (
+                        <button
+                            key={x.id}
+                            type="button"
+                            data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide-to={i}
+                            className={classNames({ active: i === 0 })}
+                            aria-current="true"
+                            aria-label={`Slide ${i + 1}`}
+                        />
+                    ))}
                 </div>
 
                 {hotThreads.map((x) => (
                     <div key={x.id} className="carousel-item active">
                         <ThreadListItem
-                            authorName="TODO"
+                            authorName={userStore?.get(x.userId)?.name}
                             tagStore={tagStore}
                             hideActions
                             data={x}
                         />
-                        {/* <img
-                            src="https://res.cloudinary.com/depipxp3j/image/upload/f_auto,q_auto/cld-sample-5"
-                            className="d-block w-100 img-fluid"
-                            alt="..."
-                        /> */}
                     </div>
                 ))}
             </div>
@@ -77,10 +64,11 @@ const HotThreadCarosel = ({ hotThreads, tagStore }: HotThreadCaroselProps) => {
         </div>
     );
 };
- 
+
 export default HotThreadCarosel;
 
 export interface HotThreadCaroselProps {
     hotThreads: Thread[];
     tagStore: Tag[];
+    userStore: Map<string, any>;
 }
