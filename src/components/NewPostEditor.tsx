@@ -6,14 +6,16 @@ import PostCardBase from "./PostCardBase";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/reexports/reactToasify";
+import QuillPost from "./QuillPost";
 
 const NewPostEditor = ({ user, threadId }: NewPostEditorProps) => {
     const router = useRouter();
     const [isPosting, setPosting] = useState(false);
     const [content, setContent] = useState("");
+    const reactQuillRef = useRef<typeof ReactQuill>(null);
 
     const handlePost = async () => {
         try {
@@ -58,12 +60,7 @@ const NewPostEditor = ({ user, threadId }: NewPostEditorProps) => {
             }}
         >
             <div>
-                <ReactQuill
-                    placeholder="Write your post here..."
-                    theme="snow"
-                    value={content}
-                    onChange={(x) => setContent(x)}
-                />
+                <QuillPost content={content} setContent={setContent} />
                 <button
                     className="btn btn-primary mt-2"
                     style={{ float: "right" }}

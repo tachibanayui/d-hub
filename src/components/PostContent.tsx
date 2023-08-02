@@ -23,7 +23,12 @@ const PostContent = ({
         return (
             <div
                 dangerouslySetInnerHTML={{
-                    __html: sanitizeHtml(initialPostContent),
+                    __html: sanitizeHtml(initialPostContent, {
+                        allowedTags: ["img"],
+                        allowedAttributes: {
+                            img: ["src", "align"],
+                        },
+                    }),
                 }}
             />
         );

@@ -143,7 +143,7 @@ const NewThreadWizard = ({ tags, userProfile }: NewThreadWizardProps) => {
                         />
 
                         <CldUploadWidget
-                            uploadPreset="dhub-pfp"
+                            uploadPreset="dhub-thread-bg"
                             options={{
                                 maxFileSize: 10000000,
                                 singleUploadAutoClose: true,
@@ -236,10 +236,13 @@ const NewThreadWizard = ({ tags, userProfile }: NewThreadWizardProps) => {
             </div>
 
             <div className="col-12 col-lg-6 bg-light p-2 p-lg-5 position-relative">
-                <div className="sticky-top" style={{
-                    zIndex: 1,
-                    top: '4.5rem'
-                }}>
+                <div
+                    className="sticky-top"
+                    style={{
+                        zIndex: 1,
+                        top: "4.5rem",
+                    }}
+                >
                     {/* Preview */}
                     <h1 className="display-5">Thread preview: </h1>
                     <i>Here&apos;s how your post going to look like </i>
