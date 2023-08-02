@@ -116,19 +116,27 @@ export async function applyEditProfile(userId: string, data: EditProfileDTO) {
         editData.dob = new Date(data.dob);
     }
 
-    const res = await (
-        await profileCollection
-    ).updateOne(
+    const { username, ...pfp } = data;
+
+    const res = await(await profileCollection).updateOne(
         {
             _id: new ObjectId(userId),
         },
         {
             $set: {
-                ...data, 
-                dob: data.dob ? new Date(data.dob) : undefined
-            }
+                ...pfp,
+                dob: data.dob ? new Date(data.dob) : undefined,
+            },
         }
     );
+
+    const resUser = await (await userCollection).updateOne({
+        _id: new ObjectId(userId)
+    }, {
+        $set: {
+            name: username
+        }
+    })
 
     if (!res.acknowledged || res.matchedCount !== 1) {
         return false;
