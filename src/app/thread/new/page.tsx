@@ -8,8 +8,7 @@ import { authOptions } from "@/utils/auth";
 import { idAsString } from "@/utils/mongoId";
 
 const NewThreadPage = async () => {
-    const tags = await getTags();
-    const session = await getServerSession(authOptions);
+    const [tags, session] = await Promise.all([getTags(), getServerSession(authOptions)]);
     if (!session) {
         return redirect("/login");
     }

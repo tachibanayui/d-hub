@@ -19,7 +19,6 @@ const ThreadListPage = async ({
 }: {
     searchParams: { [s: string]: string };
 }) => {
-    const tags = await getTags();
     const selTags =
         searchParams.tagIds?.length > 0 ? searchParams.tagIds.split(",") : [];
     const beforeNum = searchParams.before
@@ -30,8 +29,9 @@ const ThreadListPage = async ({
         : undefined;
 
     const pageIndex = searchParams.page ? parseInt(searchParams.page) : 1;
-
-    const threads = await searchThreads({
+    
+    const tagsPromise = getTags();
+    const threadsPromise = searchThreads({
         ...(searchParams as any),
         tags: selTags,
         before: beforeNum,
@@ -40,6 +40,7 @@ const ThreadListPage = async ({
         pageSize,
     });
 
+    const [tags, threads] = await Promise.all([tagsPromise, threadsPromise]);
     const user = (
         await getUsersById(
             Array.from(new Set([...threads.data.map((x) => x.userId)]))
