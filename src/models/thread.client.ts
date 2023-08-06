@@ -12,7 +12,9 @@ export const postZod = z.object({
 });
 export type Post = z.infer<typeof postZod>;
 
-export const postDbZod = omit(postZod, ["id"]);
+export const postDbZod = omit(postZod, ["id"]).extend({
+    deleted: z.boolean().default(false)
+});
 export type PostDB = z.infer<typeof postDbZod>;
 
 export const createPostDto = retain(postZod, ["threadId", "userId", "content"]);

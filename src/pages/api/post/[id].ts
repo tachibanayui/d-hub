@@ -12,13 +12,26 @@ export default async function handler(
 ) {
     const { id } = req.query;
     if (typeof id !== "string") {
-        res.status(400).json({ message: "No post id provided!" });
+        res.status(400).json({ success: false, message: "No post id provided!" });
         return;
     }
 
     if (req.method !== "DELETE") {
-        return res.status(400).json({ message: "Unknown http method" });
+        return res.status(400).json({ success: false, message: "Unknown http method" });
     } 
+
+    // check for permission
+    const [session, post] = await Promise.all([getServerSession(req, res, authOptions), findPostsById([id])]);
+    if (post.length === 0) {
+        return res.status(400).json({ success: false, message: `Post ${id} doesn't exist!` });
+    }
+
+    const author = post[0].userId;
+    const userId = session?.user.id;
+    const role = session?.user.role ?? 1;
+    if (role < 2 && userId !== author) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
 
     const rs = await deletePost(id);
     if (rs.success) {

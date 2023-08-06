@@ -111,6 +111,7 @@ export async function findPostsById(ids: string[]) {
     )
         .find({
             _id: { $in: ids.map((x) => new ObjectId(x)) },
+            deleted: false,
         })
         .toArray();
 
@@ -123,6 +124,7 @@ export async function findPostsInThread(threadId: string) {
     )
         .find({
             threadId: threadId,
+            deleted: false,
         })
         .sort({
             created: 1,
@@ -326,8 +328,8 @@ export async function getHotThreads() {
 export async function deletePost(postId: string) {
     const res = await (
         await postCollection
-    ).deleteOne({ _id: new ObjectId(postId) });
-    if (res.deletedCount === 1) {
+    ).updateOne({ _id: new ObjectId(postId) }, { $set: { deleted: true } });
+    if (res.modifiedCount === 1) {
         return { success: true, message: "deleted successfully!" };
     } else {
         return { success: false, message: "failed to delete!" };
