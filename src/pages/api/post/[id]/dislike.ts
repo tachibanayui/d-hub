@@ -22,7 +22,7 @@ export default async function handler(
 async function handleDelete(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.query;
     if (typeof id !== "string") {
-        res.status(400).json({ message: "No profile id provided!" });
+        res.status(400).json({ message: "No post id provided!" });
         return;
     }
 

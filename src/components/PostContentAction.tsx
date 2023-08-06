@@ -1,8 +1,10 @@
 "use client";
 import { useSession } from "@/reexports/nextAuthReact";
 import { toast } from "@/reexports/reactToasify";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
+    AiFillDelete,
     AiFillDislike,
     AiFillEdit,
     AiFillExclamationCircle,
@@ -50,9 +52,13 @@ const PostContentAction = ({
     initalDislikes,
     initalLikes,
     postId,
+    postAuthorId,
 }: PostContentActionProps) => {
+    const router = useRouter();
+
     const session = useSession();
     const userId = session.data?.user.id;
+    const role = session.data?.user.role;
 
     const [isLoading, setLoading] = useState(false);
     const [likes, setLikes] = useState(initalLikes);
@@ -126,6 +132,27 @@ const PostContentAction = ({
         }
     };
 
+    const handleDelete = async () => {
+        try {
+            const rs = await fetch('/api/post/' + postId, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            const json = await rs.json();
+            if (json.success) {
+                toast.success("Post deleted successfully.");
+                router.refresh();
+            } else {
+                toast.error(json.message);
+            }
+        } catch (e) {
+            toast.error("Something went wrong. Please try again later.");
+        }
+    }
+
     return (
         <div className="d-flex gap-1 flex-row-reverse">
             <div className="dropdown">
@@ -144,11 +171,19 @@ const PostContentAction = ({
                             <AiFillExclamationCircle /> Report
                         </a>
                     </li>
-                    <li>
-                        <a className="dropdown-item" href="#">
+                    {/* <li>
+                        <button className="dropdown-item" onClick={handleEdit}>
                             <AiFillEdit /> Edit
-                        </a>
-                    </li>
+                        </button>
+                    </li> */}
+                    
+                    {(role! >= 2 || userId === postAuthorId) && (
+                        <li>
+                            <button className="dropdown-item" onClick={handleDelete}>
+                                <AiFillDelete /> Delete
+                            </button>
+                        </li>
+                    )}
                 </ul>
             </div>
 
@@ -185,4 +220,5 @@ export interface PostContentActionProps {
     initalLikes: string[];
     initalDislikes: string[];
     postId: string;
+    postAuthorId: string;
 }

@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
 
             if (account) {
                 token.userId = user.id;
-                token.role = pfps?.[0].role ?? 1;
+                token.role = pfps?.[0]?.role ?? 1;
                 return token;
             }
 

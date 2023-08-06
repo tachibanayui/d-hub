@@ -1,8 +1,16 @@
 import ThreadListItem from "@/components/ThreadListItem";
 import { Tag } from "@/models/tags.client";
+import { getHotThreads } from "@/models/thread";
 import { Thread } from "@/models/thread.client";
+import { getUsersById } from "@/models/user";
+import { idAsString } from "@/utils/mongoId";
 import classNames from "classnames";
-const HotThreadCarosel = ({ hotThreads, tagStore, userStore }: HotThreadCaroselProps) => {
+const HotThreadCarosel = async ({
+    tagStore,
+}: HotThreadCaroselProps) => {
+    const hotThreads = await getHotThreads();
+    const users = (await getUsersById(hotThreads.data.map((x) => x.userId))).map(x => idAsString(x));
+    const userStore = new Map(users.map((x) => [x.id, x]));
     return (
         <div
             id="carouselExample"
@@ -12,7 +20,7 @@ const HotThreadCarosel = ({ hotThreads, tagStore, userStore }: HotThreadCaroselP
         >
             <div className="carousel-inner">
                 <div className="carousel-indicators">
-                    {hotThreads.map((x, i) => (
+                    {hotThreads.data.map((x, i) => (
                         <button
                             key={x.id}
                             type="button"
@@ -25,7 +33,7 @@ const HotThreadCarosel = ({ hotThreads, tagStore, userStore }: HotThreadCaroselP
                     ))}
                 </div>
 
-                {hotThreads.map((x) => (
+                {hotThreads.data.map((x) => (
                     <div key={x.id} className="carousel-item active">
                         <ThreadListItem
                             authorName={userStore?.get(x.userId)?.name}
@@ -68,7 +76,5 @@ const HotThreadCarosel = ({ hotThreads, tagStore, userStore }: HotThreadCaroselP
 export default HotThreadCarosel;
 
 export interface HotThreadCaroselProps {
-    hotThreads: Thread[];
     tagStore: Tag[];
-    userStore: Map<string, any>;
 }

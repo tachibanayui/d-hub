@@ -1,4 +1,7 @@
-import NewPostEditor from "@/components/NewPostEditor";
+import dynamic from "next/dynamic";
+const NewPostEditor = dynamic(() => import("@/components/NewPostEditor"), {
+    ssr: false,
+});
 import PostCard, { PostCardProps } from "@/components/PostCard";
 import ThreadHero from "@/components/ThreadHero";
 import { Tag } from "@/models/tags.client";
@@ -15,7 +18,7 @@ const ThreadDetailView = ({
     users,
     tagStore,
     posts,
-    sessionUser
+    sessionUser,
 }: ThreadDetailViewProps) => {
     const profileMap = useMemo(
         () => new Map(profiles.map((x) => [x.id, x])),

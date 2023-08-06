@@ -10,6 +10,7 @@ import Link from "next/link";
 import { AiOutlinePlus } from "react-icons/ai";
 import { getUsersById } from "@/models/user";
 import { idAsString } from "@/utils/mongoId";
+import { Suspense } from "react";
 
 const pageSize = 10;
 
@@ -18,7 +19,6 @@ const ThreadListPage = async ({
 }: {
     searchParams: { [s: string]: string };
 }) => {
-    const tags = await getTags();
     const selTags =
         searchParams.tagIds?.length > 0 ? searchParams.tagIds.split(",") : [];
     const beforeNum = searchParams.before
@@ -29,8 +29,9 @@ const ThreadListPage = async ({
         : undefined;
 
     const pageIndex = searchParams.page ? parseInt(searchParams.page) : 1;
-
-    const threads = await searchThreads({
+    
+    const tagsPromise = getTags();
+    const threadsPromise = searchThreads({
         ...(searchParams as any),
         tags: selTags,
         before: beforeNum,
@@ -39,14 +40,12 @@ const ThreadListPage = async ({
         pageSize,
     });
 
-    const hotThreads = await getHotThreads();
-
-    const user = (await getUsersById(Array.from(
-        new Set([
-            ...threads.data.map((x) => x.userId),
-            ...hotThreads.data.map((x) => x.userId),
-        ])
-    ))).map(x => idAsString(x));
+    const [tags, threads] = await Promise.all([tagsPromise, threadsPromise]);
+    const user = (
+        await getUsersById(
+            Array.from(new Set([...threads.data.map((x) => x.userId)]))
+        )
+    ).map((x) => idAsString(x));
 
     const userMap = new Map(user.map((x) => [x.id, x]));
 
@@ -56,7 +55,9 @@ const ThreadListPage = async ({
                 Welcome to DHub. Let&apos;s catch up with the hotest topic
                 today!
             </h1>
-            <HotThreadCarosel hotThreads={hotThreads.data} tagStore={tags} userStore={userMap} />
+            <Suspense fallback={<h1>Loading...</h1>}>
+                <HotThreadCarosel tagStore={tags} />
+            </Suspense>
 
             <hr />
 

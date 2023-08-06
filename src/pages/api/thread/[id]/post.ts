@@ -33,23 +33,23 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
 
     const content = req.body.content;
 
-    const rs = await createPost({
-        content,
-        threadId: id,
-        userId
-    }, false);
+    const rs = await createPost(
+        {
+            content,
+            threadId: id,
+            userId,
+        },
+        false
+    );
     if (rs.success) {
         res.status(200).json({
             ...rs,
-        })
-    }
-    else[
+        });
+    } else {
         res.status(500).json({
-            ...rs
-        })
-    ]
+            ...rs,
+        });
+    }
 }
 
-async function handleDelete(req: NextApiRequest, res: NextApiResponse) {
-
-}
+async function handleDelete(req: NextApiRequest, res: NextApiResponse) {}

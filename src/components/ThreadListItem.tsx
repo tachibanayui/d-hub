@@ -64,28 +64,6 @@ const ThreadListItem = ({
                         <button className="btn btn-outline-light ">
                             <AiOutlineExclamationCircle /> Report
                         </button>
-                        <div className="dropdown">
-                            <button
-                                className="btn btn-outline-light dropdown-toggle"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                <BsThreeDots />
-                            </button>
-                            <ul className="dropdown-menu">
-                                <li>
-                                    <a className="dropdown-item" href="#">
-                                        Edit
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="#">
-                                        Delete
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 )}
             </div>

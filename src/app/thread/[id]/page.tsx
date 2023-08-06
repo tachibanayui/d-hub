@@ -1,14 +1,3 @@
-import ThreadHero from "@/components/ThreadHero";
-import {
-    AiFillCalendar,
-    AiFillEye,
-    AiOutlineExclamationCircle,
-    AiOutlineShareAlt,
-} from "react-icons/ai";
-import { BsDot, BsFillPersonFill, BsThreeDots } from "react-icons/bs";
-import Image from "next/image";
-import pfp from "../../../../public/profile-placeholder.png";
-import PostCard from "@/components/PostCard";
 import ThreadDetailView from "./ThreadDetailView";
 import { getThreadDetailEx, incrementView } from "@/models/thread";
 import { notFound } from "next/navigation";
@@ -17,26 +6,30 @@ import { idAsString } from "@/utils/mongoId";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/auth";
 import { getProfilesById, roleNumberToString } from "@/models/user";
-import { profile } from "console";
 
 const ViewThreadPage = async ({ params }: { params: { id: string } }) => {
+    const id = params.id;
     const session = await getServerSession(authOptions);
     const userId = session?.user.id;
-
-    const pfp = userId
-        ? (await getProfilesById([userId])).map(x => idAsString(x))
-        : undefined;
     
-    const sessionUser = pfp?.length ? {
-        ...pfp[0],
-        name: session?.user.name!,
-        role: roleNumberToString(pfp[0].role),
-        profileImg: session?.user.image!
-    } : undefined;
+    const tagsPromise = getTags();
+    const detailsPromise = getThreadDetailEx(id);
+    const profilePromise = userId ? getProfilesById([userId]) : undefined;
+    const [tags, details, profile] = await Promise.all([
+        tagsPromise,
+        detailsPromise,
+        profilePromise,
+    ]);
+    const pfp = profile ? profile.map((x) => idAsString(x)) : undefined;
 
-    const id = params.id;
-    const tags = await getTags();
-    const details = await getThreadDetailEx(id);
+    const sessionUser = pfp?.length
+        ? {
+              ...pfp[0],
+              name: session?.user.name!,
+              role: roleNumberToString(pfp[0].role),
+              profileImg: session?.user.image!,
+          }
+        : undefined;
 
     if (!details.success) {
         return notFound();
@@ -46,7 +39,6 @@ const ViewThreadPage = async ({ params }: { params: { id: string } }) => {
 
     await incrementView(id);
     threadData!.view++;
-
 
     return (
         <main className="container p-3">

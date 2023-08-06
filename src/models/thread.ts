@@ -32,7 +32,10 @@ export async function findThreadsById(ids: string[]) {
         await threadCollection
     )
         .find({
-            _id: { $in: ids.map((x) => new ObjectId(x)) },
+            _id: {
+                $in: ids.map((x) => new ObjectId(x)),
+            },
+            deleted: false,
         })
         .toArray();
 
@@ -111,6 +114,7 @@ export async function findPostsById(ids: string[]) {
     )
         .find({
             _id: { $in: ids.map((x) => new ObjectId(x)) },
+            deleted: false,
         })
         .toArray();
 
@@ -123,6 +127,7 @@ export async function findPostsInThread(threadId: string) {
     )
         .find({
             threadId: threadId,
+            deleted: false,
         })
         .sort({
             created: 1,
@@ -263,17 +268,19 @@ export interface SearchThreadOptions {
 
 export async function searchThreads(opt: SearchThreadOptions) {
     const { title, author, tags, before, after, pageIndex, pageSize } = opt;
-    
+
     const query = {
-        title: { $regex: title || '', $options: "i" },
-        
+        deleted: false,
+        title: { $regex: title || "", $options: "i" },
     } as Document;
 
     if (author) {
-        const userIds = await(
-            await(await userCollection)
+        const userIds = await (
+            await (
+                await userCollection
+            )
                 .find({
-                    name: { $regex: author , $options: "i" },
+                    name: { $regex: author, $options: "i" },
                 })
                 .project({ _id: 1 })
                 .toArray()
@@ -318,6 +325,30 @@ export async function searchThreads(opt: SearchThreadOptions) {
 export async function getHotThreads() {
     return await searchThreads({
         pageIndex: 1,
-        pageSize: 5       
-    })
+        pageSize: 5,
+    });
 }
+
+export async function deletePost(postId: string) {
+    const res = await (
+        await postCollection
+    ).updateOne({ _id: new ObjectId(postId) }, { $set: { deleted: true } });
+    if (res.modifiedCount === 1) {
+        return { success: true, message: "deleted successfully!" };
+    } else {
+        return { success: false, message: "failed to delete!" };
+    }
+}
+
+
+export async function deleteThread(threadId: string) {
+    const res = await (
+        await threadCollection
+    ).updateOne({ _id: new ObjectId(threadId) }, { $set: { deleted: true } });
+    if (res.modifiedCount === 1) {
+        return { success: true, message: "deleted successfully!" };
+    } else {
+        return { success: false, message: "failed to delete!" };
+    }
+}
+
