@@ -263,17 +263,18 @@ export interface SearchThreadOptions {
 
 export async function searchThreads(opt: SearchThreadOptions) {
     const { title, author, tags, before, after, pageIndex, pageSize } = opt;
-    
+
     const query = {
-        title: { $regex: title || '', $options: "i" },
-        
+        title: { $regex: title || "", $options: "i" },
     } as Document;
 
     if (author) {
-        const userIds = await(
-            await(await userCollection)
+        const userIds = await (
+            await (
+                await userCollection
+            )
                 .find({
-                    name: { $regex: author , $options: "i" },
+                    name: { $regex: author, $options: "i" },
                 })
                 .project({ _id: 1 })
                 .toArray()
@@ -318,6 +319,17 @@ export async function searchThreads(opt: SearchThreadOptions) {
 export async function getHotThreads() {
     return await searchThreads({
         pageIndex: 1,
-        pageSize: 5       
-    })
+        pageSize: 5,
+    });
+}
+
+export async function deletePost(postId: string) {
+    const res = await (
+        await postCollection
+    ).deleteOne({ _id: new ObjectId(postId) });
+    if (res.deletedCount === 1) {
+        return { success: true, message: "deleted successfully!" };
+    } else {
+        return { success: false, message: "failed to delete!" };
+    }
 }

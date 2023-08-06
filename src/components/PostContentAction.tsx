@@ -1,8 +1,10 @@
 "use client";
 import { useSession } from "@/reexports/nextAuthReact";
 import { toast } from "@/reexports/reactToasify";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
+    AiFillDelete,
     AiFillDislike,
     AiFillEdit,
     AiFillExclamationCircle,
@@ -51,6 +53,8 @@ const PostContentAction = ({
     initalLikes,
     postId,
 }: PostContentActionProps) => {
+    const router = useRouter();
+
     const session = useSession();
     const userId = session.data?.user.id;
 
@@ -126,6 +130,30 @@ const PostContentAction = ({
         }
     };
 
+    const handleEdit = () => {
+    }
+
+    const handleDelete = async () => {
+        try {
+            const rs = await fetch('/api/post/' + postId, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            const json = await rs.json();
+            if (json.success) {
+                toast.success("Post deleted successfully.");
+                router.refresh();
+            } else {
+                toast.error(json.message);
+            }
+        } catch (e) {
+            toast.error("Something went wrong. Please try again later.");
+        }
+    }
+
     return (
         <div className="d-flex gap-1 flex-row-reverse">
             <div className="dropdown">
@@ -145,9 +173,14 @@ const PostContentAction = ({
                         </a>
                     </li>
                     <li>
-                        <a className="dropdown-item" href="#">
+                        <button className="dropdown-item" onClick={handleEdit}>
                             <AiFillEdit /> Edit
-                        </a>
+                        </button>
+                    </li>
+                    <li>
+                        <button className="dropdown-item" onClick={handleDelete}>
+                            <AiFillDelete /> Delete
+                        </button>
                     </li>
                 </ul>
             </div>
