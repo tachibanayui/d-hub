@@ -9,6 +9,7 @@ import {
 import { BsDot, BsFillPersonFill, BsThreeDots } from "react-icons/bs";
 import TagPill from "./TagPill";
 import { Tag } from "@/models/tags.client";
+import ThreadHeroAction from "./ThreadHeroAction";
 
 const ThreadHero = ({ data, tagStore, authorName }: ThreadHeroProps) => {
     return (
@@ -49,36 +50,7 @@ const ThreadHero = ({ data, tagStore, authorName }: ThreadHeroProps) => {
                         <AiFillEye /> {data.view} views
                     </p>
                 </div>
-                <div className="d-flex gap-1">
-                    <button className="btn btn-outline-light ">
-                        <AiOutlineShareAlt /> Share
-                    </button>
-                    <button className="btn btn-outline-light ">
-                        <AiOutlineExclamationCircle /> Report
-                    </button>
-                    <div className="dropdown">
-                        <button
-                            className="btn btn-outline-light dropdown-toggle"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            <BsThreeDots />
-                        </button>
-                        <ul className="dropdown-menu">
-                            <li>
-                                <a className="dropdown-item" href="#">
-                                    Edit
-                                </a>
-                            </li>
-                            <li>
-                                <a className="dropdown-item" href="#">
-                                    Delete
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <ThreadHeroAction thread={data}/>
             </div>
         </section>
     );

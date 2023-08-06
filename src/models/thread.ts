@@ -32,7 +32,10 @@ export async function findThreadsById(ids: string[]) {
         await threadCollection
     )
         .find({
-            _id: { $in: ids.map((x) => new ObjectId(x)) },
+            _id: {
+                $in: ids.map((x) => new ObjectId(x)),
+            },
+            deleted: false,
         })
         .toArray();
 
@@ -267,6 +270,7 @@ export async function searchThreads(opt: SearchThreadOptions) {
     const { title, author, tags, before, after, pageIndex, pageSize } = opt;
 
     const query = {
+        deleted: false,
         title: { $regex: title || "", $options: "i" },
     } as Document;
 
@@ -335,3 +339,16 @@ export async function deletePost(postId: string) {
         return { success: false, message: "failed to delete!" };
     }
 }
+
+
+export async function deleteThread(threadId: string) {
+    const res = await (
+        await threadCollection
+    ).updateOne({ _id: new ObjectId(threadId) }, { $set: { deleted: true } });
+    if (res.modifiedCount === 1) {
+        return { success: true, message: "deleted successfully!" };
+    } else {
+        return { success: false, message: "failed to delete!" };
+    }
+}
+

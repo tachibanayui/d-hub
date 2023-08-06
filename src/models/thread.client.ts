@@ -34,7 +34,9 @@ export const threadZod = z.object({
 });
 export type Thread = z.infer<typeof threadZod>;
 
-export const threadDbZod = omit(threadZod, ["id"]);
+export const threadDbZod = omit(threadZod, ["id"]).extend({
+    deleted: z.boolean().default(false)
+});
 export type ThreadDB = z.infer<typeof threadDbZod>;
 
 export const createThreadDto = retain(threadZod, [
