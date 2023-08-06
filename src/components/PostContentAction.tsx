@@ -52,11 +52,13 @@ const PostContentAction = ({
     initalDislikes,
     initalLikes,
     postId,
+    postAuthorId,
 }: PostContentActionProps) => {
     const router = useRouter();
 
     const session = useSession();
     const userId = session.data?.user.id;
+    const role = session.data?.user.role;
 
     const [isLoading, setLoading] = useState(false);
     const [likes, setLikes] = useState(initalLikes);
@@ -130,9 +132,6 @@ const PostContentAction = ({
         }
     };
 
-    const handleEdit = () => {
-    }
-
     const handleDelete = async () => {
         try {
             const rs = await fetch('/api/post/' + postId, {
@@ -172,16 +171,19 @@ const PostContentAction = ({
                             <AiFillExclamationCircle /> Report
                         </a>
                     </li>
-                    <li>
+                    {/* <li>
                         <button className="dropdown-item" onClick={handleEdit}>
                             <AiFillEdit /> Edit
                         </button>
-                    </li>
-                    <li>
-                        <button className="dropdown-item" onClick={handleDelete}>
-                            <AiFillDelete /> Delete
-                        </button>
-                    </li>
+                    </li> */}
+                    
+                    {(role! >= 2 || userId === postAuthorId) && (
+                        <li>
+                            <button className="dropdown-item" onClick={handleDelete}>
+                                <AiFillDelete /> Delete
+                            </button>
+                        </li>
+                    )}
                 </ul>
             </div>
 
@@ -218,4 +220,5 @@ export interface PostContentActionProps {
     initalLikes: string[];
     initalDislikes: string[];
     postId: string;
+    postAuthorId: string;
 }

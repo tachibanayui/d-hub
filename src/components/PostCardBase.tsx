@@ -47,6 +47,7 @@ const PostCardBase = ({ user, post, children, showActions }: PostCardBaseProps) 
                         initalDislikes={post.dislikes}
                         initalLikes={post.likes}
                         postId={post.id}
+                        postAuthorId={post.userId}
                     />
                 )}
 
